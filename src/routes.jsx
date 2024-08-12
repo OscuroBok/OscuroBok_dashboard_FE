@@ -13,7 +13,7 @@ const icon = {
   className: "w-5 h-5 text-inherit",
 };
 
-export const routes = [
+ const routes = [
   {
     layout: "dashboard",
     pages: [
