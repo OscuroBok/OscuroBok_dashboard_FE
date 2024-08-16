@@ -91,12 +91,12 @@ export function SignUp() {
           <div className="flex flex-col w-full items-start justify-center">
           <select
             className="h-[29px] w-full text-[14px]    font-[500]  border-b-2 px-1 py-1 focus:outline-none bg-white text-[#A1A1A1]"
-            {...register("dropdown", { required: "Please select an option" })}
+            {...register("userType", { required: "Please select an option" })}
             >
             <option value="" disabled selected hidden>Log in as:</option>
-            <option value="user" className="text-[#464F60] text-[16px] font-[500]">User</option>
-            <option value="superAdmin" className="text-[#D1293D] text-[16px] font-[500]">Super Admin</option>
-            <option value="Vendor" className="text-[#FF964F] text-[16px] font-[500]">Vendor</option>
+            <option value="user" className="text-[#464F60] xl:text-[16px] font-[500]">User</option>
+            <option value="superAdmin" className="text-[#D1293D] xl:text-[16px] font-[500]">Super Admin</option>
+            <option value="vendor" className="text-[#FF964F] xl:text-[16px] font-[500]">Vendor</option>
           </select>
             {errors.dropdown && <span className="text-red-400 text-xs">{errors.dropdown.message}</span>}
             </div>
@@ -109,7 +109,7 @@ export function SignUp() {
 
           {/* Password Input */}
           <div className="flex flex-col items-start justify-center">
-          <input type="password" className="h-[29px] text-[14px] text-[#6e6e6e] font-[500] w-full border-b px-2 py-1 focus:outline-none" placeholder="Password" {...register("Password", { 
+          <input type="password" className="h-[29px] text-[14px] text-[#6e6e6e] font-[500] w-full border-b px-2 py-1 focus:outline-none" placeholder="Password" {...register("password", { 
           required: "Password is required", 
           minLength: { value: 8, message: "Password must be at least 8 characters long" }, 
           maxLength: { value: 20, message: "Password cannot exceed 20 characters" },
@@ -118,7 +118,7 @@ export function SignUp() {
             message: "Password must include at least one uppercase letter, one lowercase letter, one digit."
                   }
             })}  />
-          {errors.Password && <span className="text-red-400 max-w-md text-xs">{errors.Password.message}</span>}
+          {errors.password && <span className="text-red-400 max-w-md text-xs">{errors.password.message}</span>}
           </div>
 
           {/* Phone Number Input */}
@@ -131,10 +131,10 @@ export function SignUp() {
           <div className="flex flex-col">
             <button
           type="submit"
-          className={`w-full py-2 text-white font-semibold text-lg rounded-md bg-[#8BB2B2] ] cursor-pointer hover:bg-[#76a4a4] transition-all duration-200 ${isSubmitting ? 'opacity-50 cursor-not-allowed' : ''}`}
+          className={`w-full py-2 text-white font-semibold text-lg rounded-md bg-[#8BB2B2] ] cursor-pointer hover:bg-[#76a4a4] transition-all duration-200 ${isSubmitting ? 'opacity-70 cursor-not-allowed' : ''}`}
           disabled={isSubmitting}
           >
-          {isSubmitting ? 'Creating Account...' : 'Create Account'}
+          {isSubmitting ? 'Creating...' : 'Create Account'}
           </button>
             <span className="text-xm text-[#A1A1A1]">Already have an account? <Link to={'/auth/sign-in'}><span className="text-[#8BB2B2]">Login</span></Link> </span>
         </div>
