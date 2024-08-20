@@ -31,6 +31,14 @@ export function SignUp() {
       navigate('/auth/sign-in')
     }, 2000); 
   };
+
+  const googleSignUp = () => {
+    console.log("Google Sign Up");
+  }
+
+  const facebookSignUp = () => { 
+    console.log("Facebook Sign Up");
+  }
   
 
   return (
@@ -61,14 +69,14 @@ export function SignUp() {
           <Typography variant="h3" className="h-[42px] text-[#525252] font-poppins  mb-4">Create Account</Typography>
           <div className="flex gap-3 flex-col lg:flex-row ">
             <div className="lg:flex-1">
-              <button className="w-full h-[40px] flex gap-2 items-center justify-center rounded-lg text-[#A1A1A1] text-[16px] border border-[#E8E8E8] px-4 py-2 hover:bg-[#f3f3f3] transition-all duration-200">
+              <button onClick={googleSignUp} className="w-full h-[40px] flex gap-2 items-center justify-center rounded-lg text-[#A1A1A1] text-[16px] border border-[#E8E8E8] px-4 py-2 hover:bg-[#f3f3f3] transition-all duration-200">
                 <img src="/img/logo-google.png" alt="Google logo" className="h-6" />
               <span className="hidden xl:inline">Continue with Google</span>
               <span className="inline xl:hidden">Google</span>
               </button>
             </div>
             <div className="lg:flex-1">
-              <button className="w-full h-[40px]  flex gap-2 items-center justify-center rounded-lg text-[#A1A1A1] text-[16px] border border-[#E8E8E8] px-4 py-2 hover:bg-[#f3f3f3] transition-all duration-200">
+              <button onClick={facebookSignUp} className="w-full h-[40px]  flex gap-2 items-center justify-center rounded-lg text-[#A1A1A1] text-[16px] border border-[#E8E8E8] px-4 py-2 hover:bg-[#f3f3f3] transition-all duration-200">
                 <img src="/img/logo-facebook.png" alt="Facebook logo" className="h-6" />
               <span className="hidden xl:inline">Continue with Facebook</span>
               <span className="inline xl:hidden">Facebook</span>
@@ -103,7 +111,7 @@ export function SignUp() {
 
           {/* Email Input */}
           <div className="flex flex-col items-start justify-center">
-          <input className="h-[29px] text-[14px] text-[#6e6e6e] font-[500] w-full border-b px-2 py-1 focus:outline-none" placeholder="Email Address" {...register("email",{required: true})} />
+          <input type="email" className="h-[29px] text-[14px] text-[#6e6e6e] font-[500] w-full border-b px-2 py-1 focus:outline-none" placeholder="Email Address" {...register("email",{required: true})} />
             {errors.email && <span className="text-red-400 text-xs">Please give correct email!</span>}
             </div>
 

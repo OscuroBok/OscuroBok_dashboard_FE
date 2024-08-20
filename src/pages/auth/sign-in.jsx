@@ -6,85 +6,89 @@ import {
   Typography,
 } from "@material-tailwind/react";
 import { Link } from "react-router-dom";
+import { useForm } from "react-hook-form"
 
 
 export function SignIn() {
-  return (
-    <section className="m-8 flex gap-4">
-      <div className="w-full lg:w-3/5 mt-24">
-        <div className="text-center">
-          <Typography variant="h2" className="font-bold mb-4">Sign In</Typography>
-          <Typography variant="paragraph" color="blue-gray" className="text-lg font-normal">Enter your email and password to Sign In.</Typography>
+
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm()
+
+  const onSubmit = (data) => {
+    // setIsSubmitting(true);
+    console.log(data);
+    setTimeout(() => {
+      // setIsSubmitting(false);
+      // navigate('/auth/sign-in')
+    }, 2000); 
+  };
+
+  const googleSignIn = () => {
+    console.log("Signing in with Google");
+  }
+
+  const facebookSignIn = () => {
+    console.log("Signing in with Facebook");
+  }
+
+
+  return (  
+    <section className="m-8 mt-2 flex gap-4  lg:px-2">
+        
+      <div className="w-full lg:w-[631px] mt-10 ">
+        <div className="text-center flex items-start justify-center">
+            <img className="h-10 w-10 object-cover" src="../../../public/img/logo-oscurobook.png" alt="" />
+          <Typography variant="h2" className="font-semibold mb-3">
+            Welcome Back👋</Typography>
+          
         </div>
-        <form className="mt-8 mb-2 mx-auto w-80 max-w-screen-lg lg:w-1/2">
-          <div className="mb-1 flex flex-col gap-6">
-            <Typography variant="small" color="blue-gray" className="-mb-3 font-medium">
-              Your email
+        <div  className="mt-8 mb-2 mx-auto w-80 max-w-screen-lg lg:w-1/2">
+          <form onSubmit={handleSubmit(onSubmit)} className="mb-1 flex flex-col gap-4">
+
+            {/* Email */}
+            <div className="flex flex-col items-start justify-center">
+              <label htmlFor="email">Email</label>
+              <input type="email" id="email" className="h-[29px] text-[14px] text-[#6e6e6e] font-[500] w-full border p-4 rounded-md focus:outline-none" placeholder="Example@email.com" {...register("email",{required: true})} />
+              {errors.email && <span className="text-red-400 text-xs">Please give a valid email</span>}
+            </div>
+
+            {/* Password */}
+            <div className="flex flex-col items-start justify-center">
+              <label htmlFor="password">Password</label>
+              <input type="password" id="password"  className="h-[29px] text-[14px] text-[#6e6e6e] font-[500] w-full border p-4 rounded-md focus:outline-none" placeholder="Password" {...register("password", { 
+            required: "Password is required", 
+              })} />
+              {errors.password && <span className="text-red-400 text-xs">Incorrect password</span>}
+            </div>
+            
+          
+          <div className="flex items-center justify-end gap-2 ">
+            
+            <Typography variant="small" className="font-medium text-gray-900">
+              <Link to={'/'} className="text-[#1E4AE9] font-roboto">Forgot Password?</Link>
             </Typography>
-            <Input
-              size="lg"
-              placeholder="name@mail.com"
-              className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
-              labelProps={{
-                className: "before:content-none after:content-none",
-              }}
-            />
-            <Typography variant="small" color="blue-gray" className="-mb-3 font-medium">
-              Password
-            </Typography>
-            <Input
-              type="password"
-              size="lg"
-              placeholder="********"
-              className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
-              labelProps={{
-                className: "before:content-none after:content-none",
-              }}
-            />
           </div>
-          <Checkbox
-            label={
-              <Typography
-                variant="small"
-                color="gray"
-                className="flex items-center justify-start font-medium"
-              >
-                I agree the&nbsp;
-                <a
-                  href="#"
-                  className="font-normal text-black transition-colors hover:text-gray-900 underline"
-                >
-                  Terms and Conditions
-                </a>
-              </Typography>
-            }
-            containerProps={{ className: "-ml-2.5" }}
-          />
-          <Button className="mt-6" fullWidth>
+
+          <Button type="submit" className="mt-2 bg-[#162D3A] font-medium" fullWidth>
             Sign In
           </Button>
+          </form>
 
-          <div className="flex items-center justify-between gap-2 mt-6">
-            <Checkbox
-              label={
-                <Typography
-                  variant="small"
-                  color="gray"
-                  className="flex items-center justify-start font-medium"
-                >
-                  Subscribe me to newsletter
-                </Typography>
-              }
-              containerProps={{ className: "-ml-2.5" }}
-            />
-            <Typography variant="small" className="font-medium text-gray-900">
-              <a href="#">
-                Forgot Password
-              </a>
-            </Typography>
+          <div className="w-full lg:mt-6">
+              <div className="flex items-center">
+      <div className="flex-grow border-t border-gray-300"></div>
+      <span className="mx-4 text-gray-500">Or</span>
+      <div className="flex-grow border-t border-gray-300"></div>
+    </div>
           </div>
-          <div className="space-y-4 mt-8">
-            <Button size="lg" color="white" className="flex items-center gap-2 justify-center shadow-md" fullWidth>
+
+
+          <div className="space-y-4 mt-6">
+            <Button size="lg"  className="flex items-center gap-2 justify-center  bg-[#F3F9FA]" onClick={googleSignIn} fullWidth>
               <svg width="17" height="16" viewBox="0 0 17 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <g clipPath="url(#clip0_1156_824)">
                   <path d="M16.3442 8.18429C16.3442 7.64047 16.3001 7.09371 16.206 6.55872H8.66016V9.63937H12.9813C12.802 10.6329 12.2258 11.5119 11.3822 12.0704V14.0693H13.9602C15.4741 12.6759 16.3442 10.6182 16.3442 8.18429Z" fill="#4285F4" />
@@ -98,23 +102,25 @@ export function SignIn() {
                   </clipPath>
                 </defs>
               </svg>
-              <span>Sign in With Google</span>
+              <span className="text-[#313957] hidden xl:inline">Sign in With Google</span>
+              <span className="text-[#313957] inline xl:hidden">Google</span>
             </Button>
-            <Button size="lg" color="white" className="flex items-center gap-2 justify-center shadow-md" fullWidth>
-              <img src="/img/twitter-logo.svg" height={24} width={24} alt="" />
-              <span>Sign in With Twitter</span>
+            <Button size="lg"  className="flex items-center gap-2 justify-center  bg-[#F3F9FA]" onClick={facebookSignIn} fullWidth>
+              <img src="/img/logo-facebook.png" height={24} width={24} alt="" />
+              <span className="text-[#313957] hidden xl:inline">Sign in With Facebook</span>
+              <span className="text-[#313957] inline xl:hidden">Facebook</span>
             </Button>
           </div>
           <Typography variant="paragraph" className="text-center text-blue-gray-500 font-medium mt-4">
             Not registered?
             <Link to="/auth/sign-up" className="text-gray-900 ml-1">Create account</Link>
           </Typography>
-        </form>
+        </div>
 
       </div>
-      <div className="w-2/5 h-full hidden lg:block">
+      <div className="w-[60%] max-w-[800px] h-[100vh] max-h-[700px] hidden lg:block">
         <img
-          src="/img/pattern.png"
+          src="/img/Login Art.png"
           className="h-full w-full object-cover rounded-3xl"
         />
       </div>
