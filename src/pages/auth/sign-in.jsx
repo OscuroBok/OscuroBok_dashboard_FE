@@ -47,16 +47,16 @@ export function SignIn() {
     <section className="m-8 mt-2 flex relative lg:px-2">
       <button
           onClick={handleBackButton}
-          className="absolute top-2 lg:top-5 left-2 lg:left-5 text-[#292929]"
+          className="absolute top-2 lg:top-5 left-2 lg:left-5 text-[#749494]"
         >
           <IoMdArrowRoundBack className="h-8 w-8" />
         </button>
         
       <div className="w-full lg:w-3/5 mt-10 ">
-        <div className="text-center flex items-start justify-center">
-            <img className="h-10 w-10 xl:h-12 xl:w-12 object-cover" src="../../../public/img/logo-oscurobook.png" alt="" />
-          <h1 className="text-4xl lg:text-5xl xl:text-6xl font-semibold">
-            Welcome Back👋
+        <div className="text-center flex items-center justify-center">
+            <img className="h-10 w-10 xl:h-14 xl:w-14 object-cover" src="/img/logo-oscurobook.png" alt="" />
+          <h1 className="text-3xl flex items-center justify-center lg:text-5xl xl:text-6xl font-semibold">
+            Welcome Back <span className="text-4xl">👋</span>
           </h1>
           
         </div>
@@ -64,8 +64,8 @@ export function SignIn() {
           <form onSubmit={handleSubmit(onSubmit)} className="mb-1 flex flex-col gap-4">
 
             {/* Email */}
-            <div className="flex flex-col items-start justify-center">
-              <label htmlFor="email">Email</label>
+            <div className="flex flex-col lg:gap-2 items-start justify-center">
+              <label htmlFor="email" className="font-roboto text-[#6e6e6e]">Email</label>
               <input type="email" id="email" className="h-[29px] text-[14px] text-[#5f5f5f] font-[500] w-full border p-5 rounded-md focus:outline-dotted" placeholder="Example@email.com" {...register("email", {
       required: true,
       pattern: {
@@ -81,8 +81,8 @@ export function SignIn() {
             </div>
 
             {/* Password */}
-            <div className="flex flex-col items-start justify-center">
-              <label htmlFor="password">Password</label>
+            <div className="flex flex-col lg:gap-2 items-start justify-center">
+              <label htmlFor="password" className="font-roboto text-[#6e6e6e]">Password</label>
               <input type="password" id="password"  className="h-[29px] text-[14px] text-[#5f5f5f] font-[500] w-full border p-4 rounded-md focus:outline-dotted" placeholder="Password" {...register("password", { 
           required: "Password is required", 
           minLength: { value: 8, message: "Password must be at least 8 characters long" }, 

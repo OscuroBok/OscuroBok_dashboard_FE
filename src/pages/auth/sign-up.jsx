@@ -106,7 +106,7 @@ export function SignUp() {
             className="h-[29px] w-full text-[14px]    font-[500]  border-b-2 px-1 py-1 focus:outline-none bg-white text-[#A1A1A1]"
             {...register("userType", { required: "Please select an option" })}
             >
-            <option value="" disabled selected hidden>Log in as:</option>
+            <option value="" disabled  hidden>Sign up as:</option>
             <option value="user" className="text-[#464F60] xl:text-[16px] font-[500]">User</option>
             <option value="superAdmin" className="text-[#D1293D] xl:text-[16px] font-[500]">Super Admin</option>
             <option value="restaurant" className="text-[#FF964F] xl:text-[16px] font-[500]">Restaurant</option>
@@ -116,24 +116,24 @@ export function SignUp() {
 
           {/* Email Input */}
           <div className="flex flex-col items-start justify-center">
-  <input
-    type="email"
-    className="h-[29px] text-[14px] text-[#6e6e6e] font-[500] w-full border-b px-2 py-1 focus:outline-none"
-    placeholder="Email Address"
-    {...register("email", {
-      required: true,
-      pattern: {
-        value: /^[a-zA-Z0-9._%+-]+@gmail\.com$/,
-        message: "Please enter a valid Gmail address!",
-      },
-    })}
-  />
-  {errors.email && (
-    <span className="text-red-400 text-xs">
-      {errors.email.message || "Please provide a correct email!"}
-    </span>
-  )}
-</div>
+          <input
+          type="email"
+          className="h-[29px] text-[14px] text-[#6e6e6e] font-[500] w-full border-b px-2 py-1 focus:outline-none"
+          placeholder="Email Address"
+          {...register("email", {
+            required: true,
+            pattern: {
+              value: /^[a-zA-Z0-9._%+-]+@gmail\.com$/,
+              message: "Please enter a valid Gmail address!",
+            },
+          })}
+          />
+          {errors.email && (
+            <span className="text-red-400 text-xs">
+              {errors.email.message || "Please provide a correct email!"}
+            </span>
+          )}
+          </div>
 
           {/* Password Input */}
           <div className="flex flex-col items-start justify-center">
@@ -147,27 +147,27 @@ export function SignUp() {
                   }
             })}  />
           {errors.password && <span className="text-red-400 max-w-md text-xs">{errors.password.message}</span>}
-          </div>
+        </div>
 
           {/* Phone Number Input */}
-          <div className="flex flex-col items-start justify-center">
-  <input
-    type="tel"
-    className="h-[29px] text-[14px] text-[#6e6e6e] font-[500] w-full border-b px-2 py-1 focus:outline-none"
-    placeholder="Phone Number"
-    {...register("phone", {
-      required: "Please provide a phone number.",
-      pattern: {
-        value: /^\d{10}$/, 
-        message: "Provide a Valid 10 digit mobile number",
-      },
-    })}
-  />
-  {errors.phone && (
-    <span className="text-red-400 text-xs">{errors.phone.message}</span>
-  )}
-</div>
-
+        <div className="flex flex-col items-start justify-center">
+          <input
+          type="tel"
+          className="h-[29px] text-[14px] text-[#6e6e6e] font-[500] w-full border-b px-2 py-1 focus:outline-none"
+          placeholder="Phone Number"
+          {...register("phone", {
+            required: "Please provide a phone number.",
+            pattern: {
+              value: /^\d{10}$/, 
+              message: "Provide a Valid 10 digit mobile number",
+            },
+          })}
+          />
+          {errors.phone && (
+            <span className="text-red-400 text-xs">{errors.phone.message}</span>
+          )}
+        </div>
+        
 
           {/* Submit  */}
           <div className="flex flex-col">
@@ -182,7 +182,7 @@ export function SignUp() {
         </div>
         
         </form>
-          
+        
         
 
       </div>
