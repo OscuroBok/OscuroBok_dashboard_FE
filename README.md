@@ -1,17 +1,19 @@
 # OscuroBok_dashboard
-### git init
-### git clone https://github.com/OscuroBok/OscuroBok_dashboard.git
-### git add --all
-### git commit -m "Some mesage"
-### git push or git push --set-upstream origin master
-### npm install
-### npm run dev
+* git init
+* git clone https://github.com/OscuroBok/OscuroBok_dashboard.git(Clone from master)
+* git clone -b dashboard-sign-in https://github.com/OscuroBok/OscuroBok_dashboard_FE.git((Clone from other branch)
+* git add --all
+* git commit -m "Some mesage"
+* git push or git push --set-upstream origin master
+* npm i
+* npm run dev
 
 # To push pull
-### git branch -m main master
-### git fetch origin
-### git branch -u origin/master master
-### git remote set-head origin -a
+* git branch -m main master
+* git fetch origin
+* git branch -u origin/master master
+* git remote set-head origin -a
+* git push
 
 # [Material Tailwind Dashboard React](http://demos.creative-tim.com/material-tailwind-dashboard-react/#/?ref=readme-mtdr) [![Tweet](https://img.shields.io/twitter/url/http/shields.io.svg?style=social&logo=twitter)](https://twitter.com/intent/tweet?url=https://www.creative-tim.com/product/material-tailwind-dashboard-react&text=Check%20Material%20Tailwind%20Dashboard%20React%20made%20by%20@CreativeTim%20#webdesign%20#kit%20#materialdesign%20#react%20#materialtailwind%20#tailwindcss%20https://www.creative-tim.com/product/material-tailwind-dashboard-react)
 
