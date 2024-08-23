@@ -7,9 +7,12 @@ import {
 } from "@material-tailwind/react";
 import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form"
+import { IoMdArrowRoundBack } from "react-icons/io";
+import { useNavigate } from "react-router-dom";
 
 
 export function SignIn() {
+  const navigate = useNavigate()
 
   const {
     register,
@@ -35,34 +38,61 @@ export function SignIn() {
     console.log("Signing in with Facebook");
   }
 
+  const handleBackButton = () => {
+    navigate(-1)
+  }
+
 
   return (  
-    <section className="m-8 mt-2 flex gap-4  lg:px-2">
+    <section className="m-8 mt-2 flex relative lg:px-2">
+      <button
+          onClick={handleBackButton}
+          className="absolute top-2 lg:top-5 left-2 lg:left-5 text-[#292929]"
+        >
+          <IoMdArrowRoundBack className="h-8 w-8" />
+        </button>
         
-      <div className="w-full lg:w-[631px] mt-10 ">
+      <div className="w-full lg:w-3/5 mt-10 ">
         <div className="text-center flex items-start justify-center">
-            <img className="h-10 w-10 object-cover" src="../../../public/img/logo-oscurobook.png" alt="" />
-          <Typography variant="h2" className="font-semibold mb-3">
-            Welcome Back👋</Typography>
+            <img className="h-10 w-10 xl:h-12 xl:w-12 object-cover" src="../../../public/img/logo-oscurobook.png" alt="" />
+          <h1 className="text-4xl lg:text-5xl xl:text-6xl font-semibold">
+            Welcome Back👋
+          </h1>
           
         </div>
-        <div  className="mt-8 mb-2 mx-auto w-80 max-w-screen-lg lg:w-1/2">
+        <div  className="mt-8 mb-2 mx-auto w-80  lg:w-3/5  ">
           <form onSubmit={handleSubmit(onSubmit)} className="mb-1 flex flex-col gap-4">
 
             {/* Email */}
             <div className="flex flex-col items-start justify-center">
               <label htmlFor="email">Email</label>
-              <input type="email" id="email" className="h-[29px] text-[14px] text-[#6e6e6e] font-[500] w-full border p-4 rounded-md focus:outline-none" placeholder="Example@email.com" {...register("email",{required: true})} />
-              {errors.email && <span className="text-red-400 text-xs">Please give a valid email</span>}
+              <input type="email" id="email" className="h-[29px] text-[14px] text-[#5f5f5f] font-[500] w-full border p-5 rounded-md focus:outline-dotted" placeholder="Example@email.com" {...register("email", {
+      required: true,
+      pattern: {
+        value: /^[a-zA-Z0-9._%+-]+@gmail\.com$/,
+        message: "Please enter a valid Gmail address!",
+      },
+    })}/>
+              {errors.email && (
+    <span className="text-red-400 text-xs">
+      {errors.email.message || "Please provide a correct email!"}
+    </span>
+  )}
             </div>
 
             {/* Password */}
             <div className="flex flex-col items-start justify-center">
               <label htmlFor="password">Password</label>
-              <input type="password" id="password"  className="h-[29px] text-[14px] text-[#6e6e6e] font-[500] w-full border p-4 rounded-md focus:outline-none" placeholder="Password" {...register("password", { 
-            required: "Password is required", 
-              })} />
-              {errors.password && <span className="text-red-400 text-xs">Incorrect password</span>}
+              <input type="password" id="password"  className="h-[29px] text-[14px] text-[#5f5f5f] font-[500] w-full border p-4 rounded-md focus:outline-dotted" placeholder="Password" {...register("password", { 
+          required: "Password is required", 
+          minLength: { value: 8, message: "Password must be at least 8 characters long" }, 
+          maxLength: { value: 20, message: "Password cannot exceed 20 characters" },
+          pattern: {
+            value: /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d).{8,20}$/,
+            message: "Password must include at least one uppercase letter, one lowercase letter, one digit."
+                  }
+            })} />
+              {errors.password && <span className="text-red-400 text-xs">{ errors.password.message}</span>}
             </div>
             
           
@@ -118,7 +148,7 @@ export function SignIn() {
         </div>
 
       </div>
-      <div className="w-[60%] max-w-[800px] h-[100vh] max-h-[700px] hidden lg:block">
+      <div className="lg:w-2/5 h-[100vh] max-h-[700px] hidden lg:block">
         <img
           src="/img/Login Art.png"
           className="h-full w-full object-cover rounded-3xl"

@@ -111,7 +111,7 @@ export function SignUp() {
             <option value="superAdmin" className="text-[#D1293D] xl:text-[16px] font-[500]">Super Admin</option>
             <option value="restaurant" className="text-[#FF964F] xl:text-[16px] font-[500]">Restaurant</option>
           </select>
-            {errors.dropdown && <span className="text-red-400 text-xs">{errors.dropdown.message}</span>}
+            {errors.userType && <span className="text-red-400 text-xs">{errors.userType.message}</span>}
             </div>
 
           {/* Email Input */}
