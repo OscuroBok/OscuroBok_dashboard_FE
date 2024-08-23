@@ -6,7 +6,7 @@ import {
   Typography,
 } from "@material-tailwind/react";
 import { Link,useNavigate } from "react-router-dom";
-
+import { IoMdArrowRoundBack } from "react-icons/io";
 import { useForm } from "react-hook-form"
 import { useState } from "react";
 
@@ -39,12 +39,17 @@ export function SignUp() {
   const facebookSignUp = () => { 
     console.log("Facebook Sign Up");
   }
+
+  const handleBackButton = () => {
+    navigate(-1)
+  }
   
 
   return (
     <section className="m-8 lg:m-0 bg-[#8BB2B2] flex">
       <div className="lg:w-[40%] lg:h-screen px-4 py-2  hidden lg:flex lg:flex-col">
-        <div className="flex flex-col relative items-center justify-center h-screen ">
+        <div className="flex flex-col  items-center justify-center h-screen ">
+          
           <div className="">
             <img className="h-[74px] xl:h-[80px] w-[74px] xl:w-[80px] ml-[-20px] mt-2" src="/img/logo-oscurobook.png" alt="" />
             <div className=" w-[227px] flex flex-col gap-3 items-center xl:gap-4">
@@ -58,8 +63,13 @@ export function SignUp() {
       </div>
 
       {/* Right Side */}
-      <div className="w-full flex flex-col lg:shadow-lg bg-[#FFFFFF] mx-auto lg:w-4/6 lg:rounded-l-3xl max-w-6xl  items-start lg:p-4   lg:items-center justify-center ">
-      
+      <div className="w-full relative flex flex-col lg:shadow-lg bg-[#FFFFFF] mx-auto lg:w-4/6 lg:rounded-l-3xl max-w-6xl  items-start lg:p-4   lg:items-center justify-center ">
+        <button
+          onClick={handleBackButton}
+          className="absolute top-2 lg:top-5 left-2 lg:left-5 text-[#749494]"
+        >
+          <IoMdArrowRoundBack className="h-8 w-8" />
+        </button>
         <div className="md:w-[60%] mx-auto">
           <Typography variant="h3" className="h-[42px] text-[#525252] font-poppins  mb-4">Create Account</Typography>
           <div className="flex gap-3 flex-col lg:flex-row ">
@@ -173,6 +183,7 @@ export function SignUp() {
         
         </form>
           
+        
 
       </div>
     </section>
