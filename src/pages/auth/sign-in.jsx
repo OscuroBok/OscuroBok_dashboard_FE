@@ -44,7 +44,7 @@ export function SignIn() {
 
 
   return (  
-    <section className="m-8 mt-2 flex relative lg:px-2">
+    <section className="m-8 mt-2 flex relative  lg:px-2 ">
       <button
           onClick={handleBackButton}
           className="absolute top-2 lg:top-5 left-2 lg:left-5 text-[#749494]"
@@ -52,15 +52,15 @@ export function SignIn() {
           <IoMdArrowRoundBack className="h-8 w-8" />
         </button>
         
-      <div className="w-full lg:w-3/5 mt-10 ">
+      <div className="w-full lg:w-3/5 mt-8 lg:mt-2 2xl:mt-4 ">
         <div className="text-center flex items-center justify-center">
             <img className="h-10 w-10 xl:h-14 xl:w-14 object-cover" src="/img/logo-oscurobook.png" alt="" />
-          <h1 className="text-3xl flex items-center justify-center lg:text-5xl xl:text-6xl font-semibold">
+          <h1 className="text-3xl text-[#162D3A] flex items-center justify-center lg:text-4xl xl:text-5xl font-semibold">
             Welcome Back <span className="text-4xl">👋</span>
           </h1>
           
         </div>
-        <div  className="mt-8 mb-2 mx-auto w-80  lg:w-3/5  ">
+        <div  className="mt-6 2xl:mt-8 mb-2 mx-auto w-80  lg:w-3/5  ">
           <form onSubmit={handleSubmit(onSubmit)} className="mb-1 flex flex-col gap-4">
 
             {/* Email */}
@@ -81,7 +81,7 @@ export function SignIn() {
             </div>
 
             {/* Password */}
-            <div className="flex flex-col lg:gap-2 items-start justify-center">
+            <div className="flex flex-col lg:gap-1 items-start justify-center">
               <label htmlFor="password" className="font-roboto text-[#6e6e6e]">Password</label>
               <input type="password" id="password"  className="h-[29px] text-[14px] text-[#5f5f5f] font-[500] w-full border p-4 rounded-md focus:outline-dotted" placeholder="Password" {...register("password", { 
           required: "Password is required", 
@@ -96,19 +96,19 @@ export function SignIn() {
             </div>
             
           
-          <div className="flex items-center justify-end gap-2 ">
+          <div className="flex items-center justify-end ">
             
             <Typography variant="small" className="font-medium text-gray-900">
               <Link to={'/'} className="text-[#1E4AE9] font-roboto">Forgot Password?</Link>
             </Typography>
           </div>
 
-          <Button type="submit" className="mt-2 bg-[#162D3A] font-medium" fullWidth>
+          <Button type="submit" className="mt-1 2xl:mt-2 bg-[#162D3A] font-medium" fullWidth>
             Sign In
           </Button>
           </form>
 
-          <div className="w-full lg:mt-6">
+          <div className="w-full lg:mt-5 2xl:mt-6">
               <div className="flex items-center">
       <div className="flex-grow border-t border-gray-300"></div>
       <span className="mx-4 text-gray-500">Or</span>
@@ -117,7 +117,7 @@ export function SignIn() {
           </div>
 
 
-          <div className="space-y-4 mt-6">
+          <div className="space-y-4 mt-5 2xl:mt-6">
             <Button size="lg"  className="flex items-center gap-2 justify-center  bg-[#F3F9FA]" onClick={googleSignIn} fullWidth>
               <svg width="17" height="16" viewBox="0 0 17 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <g clipPath="url(#clip0_1156_824)">
@@ -141,14 +141,14 @@ export function SignIn() {
               <span className="text-[#313957] inline xl:hidden">Facebook</span>
             </Button>
           </div>
-          <Typography variant="paragraph" className="text-center text-blue-gray-500 font-medium mt-4">
+          <Typography  className="text-center lg:text-sm text-blue-gray-500 font-medium mt-1">
             Not registered?
-            <Link to="/auth/sign-up" className="text-gray-900 ml-1">Create account</Link>
+            <Link to="/auth/sign-up" className="text-[#162D3A] ml-1">Create account</Link>
           </Typography>
         </div>
 
       </div>
-      <div className="lg:w-2/5 h-[100vh] max-h-[700px] hidden lg:block">
+      <div className="lg:w-2/5  max-h-[700px] hidden lg:block">
         <img
           src="/img/Login Art.png"
           className="h-full w-full object-cover rounded-3xl"
