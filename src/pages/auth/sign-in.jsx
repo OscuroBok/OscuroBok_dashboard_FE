@@ -43,7 +43,7 @@ export function SignIn() {
   };
 
   return (  
-    <section className="m-8 mt-2 flex relative lg:px-2">
+    <div className="p-8 h-full flex lg:px-2">
       <button
           onClick={handleBackButton}
           className="absolute top-2 lg:top-5 left-2 lg:left-5 text-[#749494]"
@@ -184,7 +184,7 @@ export function SignIn() {
           className="h-full w-full object-cover rounded-3xl"
         />
       </div>
-    </section>
+    </div>
   );
 }
 
