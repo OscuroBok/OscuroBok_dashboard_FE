@@ -69,7 +69,7 @@ export function SignIn() {
               <input
                 type="email"
                 id="email"
-                className="h-[29px] text-[14px] text-[#5f5f5f] font-[500] w-full border p-5 rounded-md focus:outline-dotted"
+                className="h-[35px] text-[14px] text-[#5f5f5f] font-[500] w-full border px-3 py-4 rounded-md focus:outline-dotted"
                 placeholder="Example@email.com"
                 {...register("email", {
                   required: true,
@@ -89,7 +89,7 @@ export function SignIn() {
             {/* Password */}
             <div className="flex flex-col lg:gap-2 items-start justify-center">
               <label htmlFor="password" className="font-roboto text-[#A1A1A1]">Password</label>
-              <input type="password" id="password"  className="h-[29px] text-[14px] text-[#5f5f5f] font-[500] w-full border p-4 rounded-md focus:outline-dotted" placeholder="Password" {...register("password", { 
+              <input type="password" id="password"  className="h-[35px] text-[14px] text-[#5f5f5f] font-[500] w-full border px-3 py-4 rounded-md focus:outline-dotted" placeholder="Password" {...register("password", { 
           required: "Password is required", 
           minLength: { value: 8, message: "Password must be at least 8 characters long" }, 
           maxLength: { value: 20, message: "Password cannot exceed 20 characters" },
