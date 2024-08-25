@@ -46,7 +46,7 @@ export function SignUp() {
   
 
   return (
-    <section className="m-8 lg:m-0 bg-[#8BB2B2] flex">
+    <div className="m-8 lg:m-0 bg-[#8BB2B2] flex">
       <div className="lg:w-[40%] lg:h-screen px-4 py-2  hidden lg:flex lg:flex-col">
         <div className="flex flex-col  items-center justify-center h-screen ">
           
@@ -186,7 +186,7 @@ export function SignUp() {
         
 
       </div>
-    </section>
+    </div>
   );
 }
 
