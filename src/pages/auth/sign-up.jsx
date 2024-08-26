@@ -103,7 +103,7 @@ export function SignUp() {
           {/* Login Type */}
           <div className="flex flex-col w-full items-start justify-center">
           <select
-            className="h-[29px] w-full text-[14px]    font-[500]  border-b-2 px-1 py-1 focus:outline-none bg-white text-[#A1A1A1]"
+            className="h-[29px] w-full text-[14px] font-[500]  border-b-2 px-1 py-1 focus:outline-none bg-white text-[#A1A1A1]"
             {...register("userType", { required: "Please select an option" })}
             >
             <option value="" disabled  hidden>Sign up as:</option>

@@ -10,14 +10,14 @@ import { useForm } from "react-hook-form";
 import { IoMdArrowRoundBack } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
 
-// nm
+
 export function SignIn() {
   const navigate = useNavigate();
 
   const {
     register,
     handleSubmit,
-    watch,
+    
     formState: { errors },
   } = useForm();
 
@@ -43,7 +43,8 @@ export function SignIn() {
   };
 
   return (  
-    <div className="p-8 h-full flex lg:px-2">
+    
+    <div className="ml-8 mr-8 mt-2 flex  relative ">
       <button
           onClick={handleBackButton}
           className="absolute top-2 lg:top-5 left-2 lg:left-5 text-[#749494]"
@@ -51,14 +52,14 @@ export function SignIn() {
           <IoMdArrowRoundBack className="h-8 w-8" />
         </button>
         
-      <div className="w-full lg:w-3/5 mt-6 ">
+      <div className="w-full lg:w-3/5 mt-5 ">
         <div className="text-center flex items-center justify-center">
             <img className="h-10 w-10 xl:h-14 xl:w-14 object-cover" src="/img/logo-oscurobook.png" alt="" />
           <h1 className="text-3xl text-[#749494] flex items-center justify-center  xl:text-5xl font-semibold">
             Welcome Back <span className="text-4xl">👋</span>
           </h1>
         </div>
-        <div  className="mt-8 mb-2 mx-auto w-80  lg:w-3/5  ">
+        <div  className="mt-8 mx-auto w-80  lg:w-3/5  ">
           <form onSubmit={handleSubmit(onSubmit)} className="mb-1 flex flex-col gap-4">
 
             {/* Email */}
