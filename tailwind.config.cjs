@@ -7,6 +7,7 @@ module.exports = withMT({
     extend: {
       fontFamily: {
         poppins: ['Poppins', 'sans-serif'],
+        roboto: ['Roboto']
       },
     },
   },

@@ -6,7 +6,7 @@ import {
   Typography,
 } from "@material-tailwind/react";
 import { Link,useNavigate } from "react-router-dom";
-
+import { IoMdArrowRoundBack } from "react-icons/io";
 import { useForm } from "react-hook-form"
 import { useState } from "react";
 
@@ -31,44 +31,57 @@ export function SignUp() {
       navigate('/auth/sign-in')
     }, 2000); 
   };
+
+  const googleSignUp = () => {
+    console.log("Google Sign Up");
+  }
+
+  const facebookSignUp = () => { 
+    console.log("Facebook Sign Up");
+  }
+
+  const handleBackButton = () => {
+    navigate(-1)
+  }
   
 
   return (
-    <section className="m-8 lg:m-0 bg-[#8BB2B2] flex">
+    <div className="m-8 lg:m-0 bg-[#8BB2B2] flex">
       <div className="lg:w-[40%] lg:h-screen px-4 py-2  hidden lg:flex lg:flex-col">
-        <div className="flex flex-col relative items-start justify-start h-screen  overscroll-contain">
-          <div className="ml-5">
-            <img className="h-[74px] w-[74px] ml-[-20px] mt-2" src="/img/logo-oscurobook.png" alt="" />
-            <div className="h-[80px] w-[227px]">
-              <h2 className="text-[34px] font-[500] h-[40px] text-[#FFFFFF] font-poppins left-[74px]">OscuroBok</h2>
-              <h2 className="text-[34px] font-[500] text-[#FFFFFF] font-poppins left-[74px]">Sign Up Form</h2>
+        <div className="flex flex-col  items-center justify-center h-screen ">
+          
+          <div className="">
+            <img className="h-[74px] xl:h-[80px] w-[74px] xl:w-[80px] ml-[-20px] mt-2" src="/img/logo-oscurobook.png" alt="" />
+            <div className=" w-[227px] flex flex-col gap-3 items-center xl:gap-4">
+              <h2 className="text-[50px] xl:text-[55px]  font-[500] h-[40px] text-[#FFFFFF] font-poppins left-[74px]">OscuroBok</h2>
+              <h2 className="text-[34px]  font-[500] text-[#FFFFFF] font-poppins left-[74px]">Sign Up Form</h2>
             </div>
             <h4 className="mt-4 text-[#FFFFFF] ">Make OsccuroBok into reality</h4>
           </div>
         </div>
-        <img 
-          className="h-80 z-10 w-96 bg-transparent object-contain justify-end self-end absolute top-[270.41px] left-[93.15px] " 
-          src="/img/abstraction-removebg.png" 
-          alt="abstraction.png" 
-          style={{ transform: 'rotate(2.72deg)' }} 
-        />
+
       </div>
 
       {/* Right Side */}
-      <div className="w-full flex flex-col lg:shadow-lg bg-[#FFFFFF] mx-auto lg:w-4/6 lg:rounded-l-3xl max-w-6xl  items-start lg:p-4   lg:items-center justify-center ">
-      
+      <div className="w-full relative flex flex-col lg:shadow-lg bg-[#FFFFFF] mx-auto lg:w-4/6 lg:rounded-l-3xl max-w-6xl  items-start lg:p-4   lg:items-center justify-center ">
+        <button
+          onClick={handleBackButton}
+          className="absolute top-2 lg:top-5 left-2 lg:left-5 text-[#749494]"
+        >
+          <IoMdArrowRoundBack className="h-8 w-8" />
+        </button>
         <div className="md:w-[60%] mx-auto">
           <Typography variant="h3" className="h-[42px] text-[#525252] font-poppins  mb-4">Create Account</Typography>
           <div className="flex gap-3 flex-col lg:flex-row ">
             <div className="lg:flex-1">
-              <button className="w-full h-[40px] flex gap-2 items-center justify-center rounded-lg text-[#A1A1A1] text-[16px] border border-[#E8E8E8] px-4 py-2 hover:bg-[#f3f3f3] transition-all duration-200">
+              <button onClick={googleSignUp} className="w-full h-[40px] flex gap-2 items-center justify-center rounded-lg text-[#A1A1A1] text-[16px] border border-[#E8E8E8] px-4 py-2 hover:bg-[#f3f3f3] transition-all duration-200">
                 <img src="/img/logo-google.png" alt="Google logo" className="h-6" />
               <span className="hidden xl:inline">Continue with Google</span>
               <span className="inline xl:hidden">Google</span>
               </button>
             </div>
             <div className="lg:flex-1">
-              <button className="w-full h-[40px]  flex gap-2 items-center justify-center rounded-lg text-[#A1A1A1] text-[16px] border border-[#E8E8E8] px-4 py-2 hover:bg-[#f3f3f3] transition-all duration-200">
+              <button onClick={facebookSignUp} className="w-full h-[40px]  flex gap-2 items-center justify-center rounded-lg text-[#A1A1A1] text-[16px] border border-[#E8E8E8] px-4 py-2 hover:bg-[#f3f3f3] transition-all duration-200">
                 <img src="/img/logo-facebook.png" alt="Facebook logo" className="h-6" />
               <span className="hidden xl:inline">Continue with Facebook</span>
               <span className="inline xl:hidden">Facebook</span>
@@ -90,22 +103,37 @@ export function SignUp() {
           {/* Login Type */}
           <div className="flex flex-col w-full items-start justify-center">
           <select
-            className="h-[29px] w-full text-[14px]    font-[500]  border-b-2 px-1 py-1 focus:outline-none bg-white text-[#A1A1A1]"
+            className="h-[29px] w-full text-[14px] font-[500]  border-b-2 px-1 py-1 focus:outline-none bg-white text-[#A1A1A1]"
             {...register("userType", { required: "Please select an option" })}
             >
-            <option value="" disabled selected hidden>Log in as:</option>
+            <option value="" disabled  hidden>Sign up as:</option>
             <option value="user" className="text-[#464F60] xl:text-[16px] font-[500]">User</option>
             <option value="superAdmin" className="text-[#D1293D] xl:text-[16px] font-[500]">Super Admin</option>
-            <option value="vendor" className="text-[#FF964F] xl:text-[16px] font-[500]">Vendor</option>
+            <option value="restaurant" className="text-[#FF964F] xl:text-[16px] font-[500]">Restaurant</option>
           </select>
-            {errors.dropdown && <span className="text-red-400 text-xs">{errors.dropdown.message}</span>}
+            {errors.userType && <span className="text-red-400 text-xs">{errors.userType.message}</span>}
             </div>
 
           {/* Email Input */}
           <div className="flex flex-col items-start justify-center">
-          <input className="h-[29px] text-[14px] text-[#6e6e6e] font-[500] w-full border-b px-2 py-1 focus:outline-none" placeholder="Email Address" {...register("email",{required: true})} />
-            {errors.email && <span className="text-red-400 text-xs">Please give correct email!</span>}
-            </div>
+          <input
+          type="email"
+          className="h-[29px] text-[14px] text-[#6e6e6e] font-[500] w-full border-b px-2 py-1 focus:outline-none"
+          placeholder="Email Address"
+          {...register("email", {
+            required: true,
+            pattern: {
+              value: /^[a-zA-Z0-9._%+-]+@gmail\.com$/,
+              message: "Please enter a valid Gmail address!",
+            },
+          })}
+          />
+          {errors.email && (
+            <span className="text-red-400 text-xs">
+              {errors.email.message || "Please provide a correct email!"}
+            </span>
+          )}
+          </div>
 
           {/* Password Input */}
           <div className="flex flex-col items-start justify-center">
@@ -119,13 +147,27 @@ export function SignUp() {
                   }
             })}  />
           {errors.password && <span className="text-red-400 max-w-md text-xs">{errors.password.message}</span>}
-          </div>
+        </div>
 
           {/* Phone Number Input */}
-          <div className="flex flex-col items-start justify-center">
-          <input type="text" className="h-[29px] text-[14px] text-[#6e6e6e] font-[500] w-full border-b px-2 py-1 focus:outline-none" placeholder="Phone Number" {...register("phone", { required: true })} />
-            {errors.phone && <span className="text-red-400 text-xs">Please provide with a phone number.</span>}
-            </div>
+        <div className="flex flex-col items-start justify-center">
+          <input
+          type="tel"
+          className="h-[29px] text-[14px] text-[#6e6e6e] font-[500] w-full border-b px-2 py-1 focus:outline-none"
+          placeholder="Phone Number"
+          {...register("phone", {
+            required: "Please provide a phone number.",
+            pattern: {
+              value: /^\d{10}$/, 
+              message: "Provide a Valid 10 digit mobile number",
+            },
+          })}
+          />
+          {errors.phone && (
+            <span className="text-red-400 text-xs">{errors.phone.message}</span>
+          )}
+        </div>
+        
 
           {/* Submit  */}
           <div className="flex flex-col">
@@ -140,10 +182,11 @@ export function SignUp() {
         </div>
         
         </form>
-          
+        
+        
 
       </div>
-    </section>
+    </div>
   );
 }
 
