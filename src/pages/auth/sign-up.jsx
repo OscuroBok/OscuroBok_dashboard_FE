@@ -9,6 +9,8 @@ import { Link,useNavigate } from "react-router-dom";
 
 import { useForm } from "react-hook-form"
 import { useState } from "react";
+import { instance } from "@/configs/axios-config";
+import axios from "axios";
 
 
 export function SignUp() {
@@ -23,13 +25,30 @@ export function SignUp() {
   } = useForm()
 
   // Handling Form Submission
-  const onSubmit = (data) => {
-    setIsSubmitting(true);
-    setTimeout(() => {
+  const onSubmit =async (data) => {
+
+    // axios.post
+    try{
       console.log(data);
-      setIsSubmitting(false);
-      navigate('/auth/sign-in')
-    }, 2000); 
+
+    //   const response1 = await axios.post('http://localhost:5500/api/user-registration',data, {
+    //     headers: {
+    //       'Content-Type': 'multipart/form-data',
+    //       "Access-Control-Allow-Origin": "*"
+    //     }
+    //   }
+    // )
+    // console.log(response1)
+      setIsSubmitting(true);
+      const response= await instance.post('/api/user-registration',data)
+      console.log(response)
+      // setTimeout(() => {
+        setIsSubmitting(false);
+        // navigate('/auth/sign-in')
+      // }, 2000); 
+    }catch(e){
+      console.log(e)
+    }
   };
   
 
@@ -83,20 +102,20 @@ export function SignUp() {
 
           {/* Full Name Input */}
           <div className="flex flex-col items-start justify-center">
-          <input className="h-[29px] text-[14px] text-[#6e6e6e] font-[500] w-full border-b px-2 py-1 focus:outline-none " placeholder="Full Name" {...register("fullName",{required: true})} />
-            {errors.fullName && <span className="text-red-400 text-xs">Name cannot be empty!</span>}
+          <input className="h-[29px] text-[14px] text-[#6e6e6e] font-[500] w-full border-b px-2 py-1 focus:outline-none " placeholder="Full Name" {...register("name",{required: true})} />
+            {errors.name && <span className="text-red-400 text-xs">Name cannot be empty!</span>}
             </div>
 
           {/* Login Type */}
           <div className="flex flex-col w-full items-start justify-center">
           <select
             className="h-[29px] w-full text-[14px]    font-[500]  border-b-2 px-1 py-1 focus:outline-none bg-white text-[#A1A1A1]"
-            {...register("userType", { required: "Please select an option" })}
+            {...register("role_id", { required: "Please select an option" })}
             >
             <option value="" disabled selected hidden>Log in as:</option>
-            <option value="user" className="text-[#464F60] xl:text-[16px] font-[500]">User</option>
-            <option value="superAdmin" className="text-[#D1293D] xl:text-[16px] font-[500]">Super Admin</option>
-            <option value="vendor" className="text-[#FF964F] xl:text-[16px] font-[500]">Vendor</option>
+            <option value="4" className="text-[#464F60] xl:text-[16px] font-[500]">User</option>
+            <option value="1" className="text-[#D1293D] xl:text-[16px] font-[500]">Super Admin</option>
+            <option value="2" className="text-[#FF964F] xl:text-[16px] font-[500]">Admin</option>
           </select>
             {errors.dropdown && <span className="text-red-400 text-xs">{errors.dropdown.message}</span>}
             </div>
@@ -123,8 +142,8 @@ export function SignUp() {
 
           {/* Phone Number Input */}
           <div className="flex flex-col items-start justify-center">
-          <input type="text" className="h-[29px] text-[14px] text-[#6e6e6e] font-[500] w-full border-b px-2 py-1 focus:outline-none" placeholder="Phone Number" {...register("phone", { required: true })} />
-            {errors.phone && <span className="text-red-400 text-xs">Please provide with a phone number.</span>}
+          <input type="text" className="h-[29px] text-[14px] text-[#6e6e6e] font-[500] w-full border-b px-2 py-1 focus:outline-none" placeholder="Phone Number" {...register("contact_no", { required: true })} />
+            {errors.contact_no && <span className="text-red-400 text-xs">Please provide with a phone number.</span>}
             </div>
 
           {/* Submit  */}
