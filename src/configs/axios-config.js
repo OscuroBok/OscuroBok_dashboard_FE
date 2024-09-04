@@ -112,7 +112,7 @@ import { store } from "@/store/store";
 import { resetAuthState } from "@/store/auth/authSlice";
 import { redirectToPath } from "@/utils/redirect";
 
-const BASE_URL = process.env.BACKEND_URL;
+const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
 class CustomError extends Error {
   constructor(message) {
@@ -135,7 +135,6 @@ export const axiosPublic = axios.create({
 const axiosInstance = axios.create({
   baseURL: BASE_URL,
   headers: { 'Content-Type': 'application/json' },
-  withCredentials: true,
 })
 
 axiosInstance.interceptors.response.use((response) => {

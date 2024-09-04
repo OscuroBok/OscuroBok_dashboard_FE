@@ -6,49 +6,31 @@ import {
   Typography,
 } from "@material-tailwind/react";
 import { Link,useNavigate } from "react-router-dom";
-
 import { useForm } from "react-hook-form"
 import { useState } from "react";
-// import { instance } from "@/configs/axios-config";
-import axios from "axios";
+import { useMutation } from "@tanstack/react-query";
+import { userRegistration } from "@/services/auth";
 
 
 export function SignUp() {
   const navigate = useNavigate();
   const [isSubmitting, setIsSubmitting] = useState(false);
-
   const {
     register,
     handleSubmit,
     watch,
     formState: { errors },
+    reset
   } = useForm()
-
+  const {mutateAsync,isError,error}=useMutation({
+    mutationKey:['user-registration'],
+    mutationFn:(data)=>{return userRegistration(data)}
+  })
   // Handling Form Submission
   const onSubmit =async (data) => {
-
-    // axios.post
-    // try{
-    //   console.log(data);
-
-    // //   const response1 = await axios.post('http://localhost:5500/api/user-registration',data, {
-    // //     headers: {
-    // //       'Content-Type': 'multipart/form-data',
-    // //       "Access-Control-Allow-Origin": "*"
-    // //     }
-    // //   }
-    // // )
-    // // console.log(response1)
-    //   setIsSubmitting(true);
-    //   const response= await instance.post('/api/user-registration',data)
-    //   console.log(response)
-    //   // setTimeout(() => {
-    //     setIsSubmitting(false);
-    //     // navigate('/auth/sign-in')
-    //   // }, 2000); 
-    // }catch(e){
-    //   console.log(e)
-    // }
+    console.log({data})
+    await mutateAsync(data);
+    reset()
   };
   
 
