@@ -9,7 +9,7 @@ import { Link,useNavigate } from "react-router-dom";
 
 import { useForm } from "react-hook-form"
 import { useState } from "react";
-import { instance } from "@/configs/axios-config";
+// import { instance } from "@/configs/axios-config";
 import axios from "axios";
 
 
@@ -28,27 +28,27 @@ export function SignUp() {
   const onSubmit =async (data) => {
 
     // axios.post
-    try{
-      console.log(data);
+    // try{
+    //   console.log(data);
 
-    //   const response1 = await axios.post('http://localhost:5500/api/user-registration',data, {
-    //     headers: {
-    //       'Content-Type': 'multipart/form-data',
-    //       "Access-Control-Allow-Origin": "*"
-    //     }
-    //   }
-    // )
-    // console.log(response1)
-      setIsSubmitting(true);
-      const response= await instance.post('/api/user-registration',data)
-      console.log(response)
-      // setTimeout(() => {
-        setIsSubmitting(false);
-        // navigate('/auth/sign-in')
-      // }, 2000); 
-    }catch(e){
-      console.log(e)
-    }
+    // //   const response1 = await axios.post('http://localhost:5500/api/user-registration',data, {
+    // //     headers: {
+    // //       'Content-Type': 'multipart/form-data',
+    // //       "Access-Control-Allow-Origin": "*"
+    // //     }
+    // //   }
+    // // )
+    // // console.log(response1)
+    //   setIsSubmitting(true);
+    //   const response= await instance.post('/api/user-registration',data)
+    //   console.log(response)
+    //   // setTimeout(() => {
+    //     setIsSubmitting(false);
+    //     // navigate('/auth/sign-in')
+    //   // }, 2000); 
+    // }catch(e){
+    //   console.log(e)
+    // }
   };
   
 
