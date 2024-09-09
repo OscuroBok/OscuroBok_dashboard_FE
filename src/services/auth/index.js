@@ -7,3 +7,11 @@ export const userRegistration=async (userdetails)=>{
         return error
     }
 }
+export const userSignIn=async (userdetails)=>{
+    try {
+        const response= await axiosInstance.post('/login',userdetails);
+        return response.data
+    } catch (error) {
+        return error
+    }
+}

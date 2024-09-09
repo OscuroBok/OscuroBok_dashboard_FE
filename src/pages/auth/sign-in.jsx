@@ -1,14 +1,45 @@
+import { userSignIn } from "@/services/auth";
 import {
   Card,
   Input,
   Checkbox,
   Button,
   Typography,
+  Alert,
 } from "@material-tailwind/react";
-import { Link } from "react-router-dom";
+import { useMutation } from "@tanstack/react-query";
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
 
 export function SignIn() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [showAlert, setShowAlert] = useState(false);
+  const navigate=useNavigate()
+  const { mutateAsync, isError, error } = useMutation({
+    mutationKey: ['login'],
+    mutationFn: ()=>userSignIn({email,password})
+  })
+
+  async function sumbitHandler(e) {
+    e.preventDefault();
+    if (email.trim() != "" && password.trim() != "") {
+      const data=await mutateAsync();
+      if (isError) {
+        setShowAlert(true);
+        console.error(`Error occured in Signin route ${error} `);
+      }else{
+        console.log(data);
+        sessionStorage.setItem("token",data.token);
+        setEmail("");
+        setPassword("");
+        navigate("/")
+      }
+    } else {
+      setShowAlert(true);
+    }
+  }
   return (
     <section className="m-8 flex gap-4">
       <div className="w-full lg:w-3/5 mt-24">
@@ -16,7 +47,9 @@ export function SignIn() {
           <Typography variant="h2" className="font-bold mb-4">Sign In</Typography>
           <Typography variant="paragraph" color="blue-gray" className="text-lg font-normal">Enter your email and password to Sign In.</Typography>
         </div>
-        <form className="mt-8 mb-2 mx-auto w-80 max-w-screen-lg lg:w-1/2">
+        {showAlert && <Alert>Please fill values</Alert>}
+        {isError && <Alert>Something Went Wrong</Alert>}
+        <form className="mt-8 mb-2 mx-auto w-80 max-w-screen-lg lg:w-1/2" onSubmit={sumbitHandler}>
           <div className="mb-1 flex flex-col gap-6">
             <Typography variant="small" color="blue-gray" className="-mb-3 font-medium">
               Your email
@@ -28,6 +61,7 @@ export function SignIn() {
               labelProps={{
                 className: "before:content-none after:content-none",
               }}
+              onChange={(e) => setEmail(e.target.value)}
             />
             <Typography variant="small" color="blue-gray" className="-mb-3 font-medium">
               Password
@@ -40,6 +74,7 @@ export function SignIn() {
               labelProps={{
                 className: "before:content-none after:content-none",
               }}
+              onChange={(e) => setPassword(e.target.value)}
             />
           </div>
           <Checkbox
@@ -60,10 +95,9 @@ export function SignIn() {
             }
             containerProps={{ className: "-ml-2.5" }}
           />
-          <Button className="mt-6" fullWidth>
+          <Button className="mt-6" fullWidth type="submit">
             Sign In
           </Button>
-
           <div className="flex items-center justify-between gap-2 mt-6">
             <Checkbox
               label={
