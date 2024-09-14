@@ -9,8 +9,8 @@ export const userRegistration=async (userdetails)=>{
 }
 export const userSignIn=async (userdetails)=>{
     try {
-        const response= await axiosInstance.post('/login',userdetails);
-        return response.data
+        const res= await axiosInstance.post('/login',userdetails);
+        return res.data
     } catch (error) {
         return error
     }
