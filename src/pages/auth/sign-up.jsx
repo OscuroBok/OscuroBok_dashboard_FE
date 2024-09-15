@@ -35,6 +35,9 @@ export function SignUp() {
     reset()
   };
 
+  const googleSignUp = () => {}
+  const facebookSignUp = () => {}
+
 
   return (
     <div className="m-8 lg:m-0 bg-[#8BB2B2] flex">
