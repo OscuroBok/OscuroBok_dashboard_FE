@@ -1,3 +1,6 @@
+#Tech Stack
+![OscuroBokLight](https://github.com/user-attachments/assets/28f285f1-e4c9-43fc-97be-e643d80cbc51)
+
 # OscuroBok_dashboard
 * git init
 * git clone https://github.com/OscuroBok/OscuroBok_dashboard.git(Clone from master)
