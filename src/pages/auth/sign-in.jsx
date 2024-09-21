@@ -1,4 +1,6 @@
-import { userSignIn } from "@/services/auth";
+import { signIn } from "@/services/auth/authService";
+import { setAuthState } from "@/store/auth/authSlice";
+import { appPaths } from "@/utils/constants";
 import {
   Card,
   Input,
@@ -7,39 +9,46 @@ import {
   Typography,
   Alert,
 } from "@material-tailwind/react";
-import { useMutation } from "@tanstack/react-query";
+import { useFormik } from "formik";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
+import * as Yup from 'yup'
+import { useCookies } from 'react-cookie';
 
+const validationSchema = Yup.object({
+  email: Yup.string().email("Must be an email").required("Email address is mandatory"),
+  password: Yup.string().required("Password is mandatory"),
+});
+
+const initialValues = {
+  email: "",
+  password: "",
+}
 
 export function SignIn() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [showAlert, setShowAlert] = useState(false);
   const navigate=useNavigate()
-  const { mutateAsync, isError, error } = useMutation({
-    mutationKey: ['login'],
-    mutationFn: ()=>userSignIn({email,password})
-  })
+  const dispatch = useDispatch()
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [cookies, setCookie] = useCookies(['authToken']);
 
-  async function sumbitHandler(e) {
-    e.preventDefault();
-    if (email.trim() != "" && password.trim() != "") {
-      const data=await mutateAsync();
-      if (isError) {
-        setShowAlert(true);
-        console.error(`Error occured in Signin route ${error} `);
-      }else{
-        console.log(data);
-        sessionStorage.setItem("token",data.token);
-        setEmail("");
-        setPassword("");
-        navigate("/")
-      }
-    } else {
-      setShowAlert(true);
+  const handleSubmit = async (values) => {
+    setIsSubmitting(true);
+    const data = await signIn(values);
+    setIsSubmitting(false);
+    if(data) {
+      setCookie('authToken', data.token, { path: '/', maxAge: 3600 });
+      dispatch(setAuthState())
+      navigate(appPaths.DASHBOARD.HOME)
     }
-  }
+  };
+
+  const formik = useFormik({
+    initialValues,
+    validationSchema,
+    onSubmit: handleSubmit,
+  });
+
   return (
     <section className="m-8 flex gap-4">
       <div className="w-full lg:w-3/5 mt-24">
@@ -47,35 +56,47 @@ export function SignIn() {
           <Typography variant="h2" className="font-bold mb-4">Sign In</Typography>
           <Typography variant="paragraph" color="blue-gray" className="text-lg font-normal">Enter your email and password to Sign In.</Typography>
         </div>
-        {showAlert && <Alert>Please fill values</Alert>}
-        {isError && <Alert>Something Went Wrong</Alert>}
-        <form className="mt-8 mb-2 mx-auto w-80 max-w-screen-lg lg:w-1/2" onSubmit={sumbitHandler}>
+        <form className="mt-8 mb-2 mx-auto w-80 max-w-screen-lg lg:w-1/2" onSubmit={formik.handleSubmit}>
           <div className="mb-1 flex flex-col gap-6">
             <Typography variant="small" color="blue-gray" className="-mb-3 font-medium">
               Your email
             </Typography>
             <Input
+              id="email" 
+              name="email"
               size="lg"
-              placeholder="name@mail.com"
+              placeholder="Email Address"
               className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
               labelProps={{
                 className: "before:content-none after:content-none",
               }}
-              onChange={(e) => setEmail(e.target.value)}
+              value={formik.values.email} 
+              onChange={formik.handleChange} 
+              onBlur={formik.handleBlur} 
             />
+            {formik.touched.email && formik.errors.email && (
+              <span className="text-red-400 text-xs">{formik.errors.email}</span>
+            )}
             <Typography variant="small" color="blue-gray" className="-mb-3 font-medium">
               Password
             </Typography>
             <Input
               type="password"
               size="lg"
-              placeholder="********"
               className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
               labelProps={{
                 className: "before:content-none after:content-none",
               }}
-              onChange={(e) => setPassword(e.target.value)}
+              id="password" 
+              name="password" 
+              placeholder="Password" 
+              value={formik.values.password} 
+              onChange={formik.handleChange} 
+              onBlur={formik.handleBlur} 
             />
+            {formik.touched.password && formik.errors.password && (
+              <span className="text-red-400 text-xs">{formik.errors.password}</span>
+            )}
           </div>
           <Checkbox
             label={
@@ -96,7 +117,7 @@ export function SignIn() {
             containerProps={{ className: "-ml-2.5" }}
           />
           <Button className="mt-6" fullWidth type="submit">
-            Sign In
+          {isSubmitting ? 'Signing In...' : 'Sign In'}
           </Button>
           <div className="flex items-center justify-between gap-2 mt-6">
             <Checkbox
@@ -141,7 +162,7 @@ export function SignIn() {
           </div>
           <Typography variant="paragraph" className="text-center text-blue-gray-500 font-medium mt-4">
             Not registered?
-            <Link to="/auth/sign-up" className="text-gray-900 ml-1">Create account</Link>
+            <Link to={appPaths.AUTH_ROUTES.SIGNUP} className="text-gray-900 ml-1">Create account</Link>
           </Typography>
         </form>
 

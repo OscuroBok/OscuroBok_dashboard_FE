@@ -1,31 +1,39 @@
-/**
-=========================================================
-* Material Tailwind Dashboard React - v2.1.0
-=========================================================
-* Product Page: https://www.creative-tim.com/product/material-tailwind-dashboard-react
-* Copyright 2023 Creative Tim (https://www.creative-tim.com)
-* Licensed under MIT (https://github.com/creativetimofficial/material-tailwind-dashboard-react/blob/main/LICENSE.md)
-* Coded by Creative Tim
-=========================================================
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
-import React from "react";
+import React from "react"; 
 import ReactDOM from "react-dom/client";
 import App from "./App";
 import { BrowserRouter } from "react-router-dom";
 import { ThemeProvider } from "@material-tailwind/react";
 import { MaterialTailwindControllerProvider } from "@/context";
 import "../public/css/tailwind.css";
-import { QueryClient,QueryClientProvider } from "@tanstack/react-query";
-const queryClient = new QueryClient()
+import { Provider } from "react-redux";
+import { store } from "./store/store";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css"; // Don't forget to import styles!
+
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <BrowserRouter>
       <ThemeProvider>
         <MaterialTailwindControllerProvider>
-        <QueryClientProvider client={queryClient}>
-          <App />
-        </QueryClientProvider>
+          <Provider store={store}>
+            <App />
+            <ToastContainer
+              position="top-center" // You can change this to 'bottom-right', 'top-right', etc.
+              autoClose={5000}
+              hideProgressBar={false}
+              newestOnTop={true} // Set to true if you want the newest toasts at the top
+              closeOnClick
+              rtl={false}
+              pauseOnFocusLoss
+              draggable
+              pauseOnHover
+              theme="colored" // You can change this to 'light', 'dark', etc.
+              style={{
+                zIndex: 9999, // Ensure it overlays correctly
+                marginTop: '20px' // Adjust top margin if needed
+              }}
+            />
+          </Provider>
         </MaterialTailwindControllerProvider>
       </ThemeProvider>
     </BrowserRouter>
