@@ -17,6 +17,13 @@ const validationSchema = Yup.object({
   .required("Contact Number is mandatory"),
   password: Yup.string().min(9).required("Password is mandatory"),
   role_id: Yup.string().required("Please select a role") // Added validation for the dropdown
+  /** To be Considered in future for User Profile, and for discounts on Birthdays  */
+  /** sex: yup
+      .mixed()
+        .oneOf(['male', 'female', 'other'] as const)
+        .defined(),
+      birthDate: yup.date().nullable().min(new Date(1900, 0, 1)),
+  */
 });
 
 const initialValues = {
