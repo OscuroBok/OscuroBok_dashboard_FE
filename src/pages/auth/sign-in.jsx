@@ -9,8 +9,8 @@ import {
   Typography,
   Alert,
 } from "@material-tailwind/react";
-import { useFormik } from "formik";
-import { useState } from "react";
+import { useFormik } from "formik";//Form related things & validation
+import { useState } from "react"; // ***
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import * as Yup from 'yup'
@@ -26,10 +26,10 @@ const initialValues = {
   password: "",
 }
 
-export function SignIn() {
+function SignIn() {
   const navigate=useNavigate()
   const dispatch = useDispatch()
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);// ***
   const [cookies, setCookie] = useCookies(['authToken']);
 
   const handleSubmit = async (values) => {
@@ -37,7 +37,7 @@ export function SignIn() {
     const data = await signIn(values);
     setIsSubmitting(false);
     if(data) {
-      setCookie('authToken', data.token, { path: '/', maxAge: 3600 });
+      setCookie('authToken', data.token, { path: '/', maxAge: 3600 });// "/" default
       dispatch(setAuthState())
       navigate(appPaths.DASHBOARD.HOME)
     }
@@ -65,7 +65,7 @@ export function SignIn() {
               id="email" 
               name="email"
               size="lg"
-              placeholder="Email Address"
+              placeholder="name@gmail.com"
               className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
               labelProps={{
                 className: "before:content-none after:content-none",

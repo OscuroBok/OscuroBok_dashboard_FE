@@ -11,6 +11,7 @@ export const appPaths = {
         HOME: "/dashboard/home"
     }
 }
+// Meant for users who are not logged in, but has opened our app, show them only below set of Pages
 export const guestRoutes = [
     appPaths.LOGIN,
     appPaths.REGISTER,
