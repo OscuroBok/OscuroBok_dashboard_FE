@@ -12,9 +12,18 @@ import { appPaths } from "@/utils/constants";
 const validationSchema = Yup.object({
   name: Yup.string().required("Name is mandatory"),
   email: Yup.string().email("Must be an email").required("Email address is mandatory"),
-  contact_no: Yup.string().required("Contact Number is mandatory"),
-  password: Yup.string().required("Password is mandatory"),
+  contact_no: Yup.string()
+  .matches(/^\d{10}$/, "Contact Number must be exactly 10 digits and contain only numbers")
+  .required("Contact Number is mandatory"),
+  password: Yup.string().min(9).required("Password is mandatory"),
   role_id: Yup.string().required("Please select a role") // Added validation for the dropdown
+  /** To be Considered in future for User Profile, and for discounts on Birthdays  */
+  /** sex: yup
+      .mixed()
+        .oneOf(['male', 'female', 'other'] as const)
+        .defined(),
+      birthDate: yup.date().nullable().min(new Date(1900, 0, 1)),
+  */
 });
 
 const initialValues = {
@@ -52,7 +61,7 @@ export function SignUp() {
       <div className="lg:w-[40%] lg:h-screen px-4 py-2 hidden lg:flex lg:flex-col">
         <div className="flex flex-col items-center justify-center h-screen">
           <div>
-            <img className="h-[74px] xl:h-[80px] w-[74px] xl:w-[80px] ml-[-20px] mt-2" src="/img/logo-oscurobook.png" alt="" />
+            <img className="h-[74px] xl:h-[80px] w-[74px] xl:w-[80px] ml-[-20px] mt-2 justify-center" src="/img/logo-oscurobook.png" alt="" />
             <div className="w-[227px] flex flex-col gap-3 items-center xl:gap-4">
               <h2 className="text-[50px] xl:text-[55px] font-[500] text-[#FFFFFF] font-poppins">OscuroBok</h2>
               <h2 className="text-[34px] font-[500] text-[#FFFFFF] font-poppins">Sign Up Form</h2>
@@ -60,12 +69,6 @@ export function SignUp() {
             <h4 className="mt-4 text-[#FFFFFF]">Make OscuroBok into reality</h4>
           </div>
         </div>
-        <img
-          className="h-80 z-10 w-96 bg-transparent object-contain justify-end self-end absolute top-[270.41px] left-[93.15px]"
-          src="/img/abstraction-removebg.png"
-          alt="abstraction"
-          style={{ transform: 'rotate(2.72deg)' }}
-        />
       </div>
 
       {/* Right Side */}
@@ -171,9 +174,18 @@ export function SignUp() {
               id="contact_no" 
               name="contact_no" 
               placeholder="Phone Number" 
+              labelProps={{
+                className: "before:content-none after:content-none",
+              }}
               value={formik.values.contact_no} 
               onChange={formik.handleChange} 
               onBlur={formik.handleBlur} 
+              onKeyPress={(event) => {
+                // Only allow numbers
+                if (!/[0-9]/.test(event.key)) {
+                  event.preventDefault();
+                }
+              }}
             />
             {formik.touched.contact_no && formik.errors.contact_no && (
               <span className="text-red-400 text-xs">{formik.errors.contact_no}</span>

@@ -50,7 +50,7 @@ axiosInstance.interceptors.response.use((response) => {
     if (error.response && error.response.status === 403 && !originalRequest.sent) { //if originalRequest.sent == true, !false = true
       originalRequest.sent = true;
 
-      store.dispatch(resetAuthState());// Log the user out
+      store.dispatch(resetAuthState());// Log the user out by calling the reset AuthState redux function that will make the global auth false
       redirectToPath(appPaths.AUTH_ROUTES.SIGNIN);
 
       const customError = new CustomError('Session expired! Please login again');
