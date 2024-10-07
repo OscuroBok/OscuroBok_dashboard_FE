@@ -11,6 +11,12 @@ export interface registerFormValType {
   role_id: string;
 }
 
+export interface verifyOtpType {
+  email: string;  // or could be userId depending on your backend
+  otp: string;    // 6-digit OTP
+}
+
+
 export interface forgotPasswordValType {
   email: string;
 }
