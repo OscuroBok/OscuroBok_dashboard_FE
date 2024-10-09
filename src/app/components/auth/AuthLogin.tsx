@@ -26,7 +26,7 @@ import { appPaths } from "@/utils/helper/appPaths";
 import AuthSocialButtons from "@/app/auth/AuthForms/AuthSocialButtons";
 import CustomCheckbox from "../forms/theme-elements/CustomCheckbox";
 
-// Validation schema using Yup
+// Validation schema using Yups
 const validationSchema = Yup.object({
   email: Yup.string()
     .email("Must be a valid email")
