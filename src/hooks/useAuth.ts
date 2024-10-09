@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { appPaths } from "@/utils/helper/appPaths";
 
+// This code is called to check at every page, if the user is logged in or not after fetching AuthState from Redux Store, if no, then redirect to Sign In Page
 const useAuth = (): boolean => {
   const router = useRouter();
   const [checking, setChecking] = useState(true);
