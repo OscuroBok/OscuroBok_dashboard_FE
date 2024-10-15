@@ -1,5 +1,65 @@
-#Tech Stack
-![OscuroBokLight](https://github.com/user-attachments/assets/28f285f1-e4c9-43fc-97be-e643d80cbc51)
+# OscuroBok Frontend Codebase
+
+Welcome to the OscuroBok Frontend Codebase! This README provides a comprehensive yet simple guide for new contributors to understand the key components and flow of this Next.js project. The codebase primarily focuses on user authentication, OTP verification, and role-based access, using various modern technologies like React, Redux, MUI, Formik, and more.
+
+## Tech Stack
+
+![OscuroBok-Tech Stack](https://github.com/user-attachments/assets/23c4d751-a1a4-427d-89a7-1582465acbf7)
+
+- **Frontend**: Next.js, React, Redux
+- **Styling**: Material-UI (MUI) components, custom styles
+- **API Requests**: Axios (via services)
+- **State Management**: Redux Toolkit
+- **Form Handling**: Formik & Yup (for validation)
+- **Authentication**: OTP-based (Simulated)
+
+---
+
+## Key Features
+
+### Email-to-OTP Workflow
+- Users enter their email, triggering an OTP form. The OTP is verified against the backend to initiate a password reset.
+
+### Role-Based Routing
+- Based on the user type (Admin/User), redirection occurs after login using a single API call.
+
+### Smooth Transitions
+- Components like email and OTP forms have smooth UI transitions for better user experience.
+
+### Form Validation & Feedback
+- Uses Formik to handle form state, and validation provides real-time feedback. Alerts are shown using `react-toastify`.
+
+### Workflow Diagram
+
+```mermaid
+graph TD
+    A[OTP Form Displayed] --> B[User Enters OTP]
+    B --> C{OTP Valid?}
+    C -->|Yes| D[Proceed to Reset Password]
+    C -->|No| E[Error: Invalid OTP]
+```
+
+AuthForgotPassword Component
+- Located in app/pages/auth/forgotPassword.tsx
+- Handles email input and OTP verification using the useFormik hook for state management.
+
+ State Management
+- The Redux store manages global authentication and user data. Key actions include login, verifyOtp, and fetchUserData
+
+### Project Flow
+
+```mermaid
+graph TD
+    User --> |Submits Email| AuthPage
+    AuthPage --> |Sends Email| Backend
+    Backend --> |OTP Sent| AuthPage
+    User --> |Submits OTP| AuthPage
+    AuthPage --> |Verifies OTP| Backend
+    Backend --> |OTP Valid| AuthPage
+    AuthPage --> |Redirect to Reset Password| User
+
+```
+    
 
 # OscuroBok_dashboard
 * git init
@@ -18,21 +78,6 @@
 * git remote set-head origin -a
 * git push
 
-# [Material Tailwind Dashboard React](http://demos.creative-tim.com/material-tailwind-dashboard-react/#/?ref=readme-mtdr) [![Tweet](https://img.shields.io/twitter/url/http/shields.io.svg?style=social&logo=twitter)](https://twitter.com/intent/tweet?url=https://www.creative-tim.com/product/material-tailwind-dashboard-react&text=Check%20Material%20Tailwind%20Dashboard%20React%20made%20by%20@CreativeTim%20#webdesign%20#kit%20#materialdesign%20#react%20#materialtailwind%20#tailwindcss%20https://www.creative-tim.com/product/material-tailwind-dashboard-react)
-
-![version](https://img.shields.io/badge/version-2.1.0-blue.svg) [![GitHub issues open](https://img.shields.io/github/issues/creativetimofficial/material-tailwind-dashboard-react.svg)](https://github.com/creativetimofficial/material-tailwind-dashboard-react/issues?q=is%3Aopen+is%3Aissue) [![GitHub issues closed](https://img.shields.io/github/issues-closed-raw/creativetimofficial/material-tailwind-dashboard-react.svg)](https://github.com/creativetimofficial/material-tailwind-dashboard-react/issues?q=is%3Aissue+is%3Aclosed)
-
-![Image](https://s3.amazonaws.com/creativetim_bucket/products/488/original/material-tailwind-dashboard-react.jpg)
-
-Material Tailwind Dashboard React is our newest free Material Tailwind Admin Template based on Tailwind CSS and React. If you’re a developer looking to create an admin dashboard that is developer-friendly, rich with features, and highly customisable, here is your match. Our innovative Material Tailwind, Tailwind CSS & React dashboard comes with a beautiful design inspired by Google's Material Design and it will help you create stunning websites & web apps to delight your clients.
-
-**Fully Coded Elements**
-
-Material Tailwind Dashboard React is built with over 40 frontend individual elements coming from @material-tailwind/react, like buttons, inputs, navbars, nav tabs, cards, or alerts, giving you the freedom of choosing and combining. All components can take variations in color, which you can easily modify using props and tailwind css classnames. You will save a lot of time going from prototyping to full-functional code because all elements are implemented.
-
-This free Material Tailwind, Tailwind CSS & React Dashboard is coming with prebuilt design blocks, so the development process is seamless, switching from our pages to the real website is very easy to be done.
-
-View [all components here](https://www.material-tailwind.com/docs/react/button).
 
 **Documentation built by Developers**
 
@@ -40,27 +85,8 @@ Each element is well presented in very complex documentation.
 
 You can read more about the [documentation here](https://www.material-tailwind.com/docs/react/installation).
 
-**Example Pages**
-
-If you want to get inspiration or just show something directly to your clients, you can jump-start your development with our pre-built example pages. You will be able to quickly set up the basic structure for your web project.
-
-View [example pages here](https://demos.creative-tim.com/material-tailwind-dashboard-react/#/dashboard/home).
-
-**HELPFUL LINKS**
-
-- View [Github Repository](https://github.com/creativetimofficial/material-tailwind-dashboard-react)
 - Check [FAQ Page](https://www.creative-tim.com/faq)
 
-#### Special thanks
-
-During the development of this dashboard, we have used many existing resources from awesome developers. We want to thank them for providing their tools open source:
-
-- [Material Tailwind](https://material-tailwind.com/) - Material Tailwind is an easy to use components library for Tailwind CSS and Material Design.
-- [Hero Icons](https://heroicons.com/) - Beautiful hand-crafted SVG icons.
-- [Apex Charts](https://apexcharts.com/) - Modern & Interactive open-source Charts.
-- [Nepcha Analytics](https://nepcha.com?ref=readme) for the analytics tool. Nepcha is already integrated with Material Tailwind Dashboard React. You can use it to gain insights into your sources of traffic.
-
-Let us know your thoughts below. And good luck with development!
 
 ## Table of Contents
 
@@ -95,13 +121,7 @@ Let us know your thoughts below. And good luck with development!
 - [Sign in page](https://demos.creative-tim.com/material-tailwind-dashboard-react/#/auth/sign-in?ref=readme-mtdr)
 - [Sign up page](https://demos.creative-tim.com/material-tailwind-dashboard-react/#/auth/sign-up?ref=readme-mtdr)
 
-[View More](https://demos.creative-tim.com/material-tailwind-dashboard-react/#/?ref=readme-mtdr).
 
-## Quick start
-
-Quick start options:
-
-- Download from [Creative Tim](https://www.creative-tim.com/product/material-tailwind-dashboard-react?ref=readme-mtdr).
 
 ## Deploy
 
@@ -157,15 +177,7 @@ At present, we officially aim to support the last two versions of the following 
 
 <img src="https://s3.amazonaws.com/creativetim_bucket/github/browser/chrome.png" width="64" height="64"> <img src="https://s3.amazonaws.com/creativetim_bucket/github/browser/firefox.png" width="64" height="64"> <img src="https://s3.amazonaws.com/creativetim_bucket/github/browser/edge.png" width="64" height="64"> <img src="https://s3.amazonaws.com/creativetim_bucket/github/browser/safari.png" width="64" height="64"> <img src="https://s3.amazonaws.com/creativetim_bucket/github/browser/opera.png" width="64" height="64">
 
-## Resources
 
-- [Live Preview](https://demos.creative-tim.com/material-tailwind-dashboard-react/#/dashboard/home?ref=readme-mtdr)
-- [Download Page](https://www.creative-tim.com/product/material-tailwind-dashboard-react?ref=readme-mtdr)
-- Documentation is [here](https://material-tailwind.com/?ref=readme-mtdr)
-- [License Agreement](https://www.creative-tim.com/license?ref=readme-mtdr)
-- [Support](https://www.creative-tim.com/contact-us?ref=readme-mtdr)
-- Issues: [Github Issues Page](https://github.com/creativetimofficial/material-tailwind-dashboard-react/issues)
-- [Nepcha Analytics](https://nepcha.com?ref=readme) - Analytics tool for your website
 
 ## Reporting Issues
 
@@ -199,8 +211,6 @@ If you have questions or need help integrating the product please [contact us](h
 Twitter: <https://twitter.com/CreativeTim>
 
 Facebook: <https://www.facebook.com/CreativeTim>
-
-Dribbble: <https://dribbble.com/creativetim>
 
 Google+: <https://plus.google.com/+CreativetimPage>
 
