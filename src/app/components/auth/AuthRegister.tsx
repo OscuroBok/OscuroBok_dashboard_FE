@@ -64,9 +64,10 @@ const AuthRegister = ({ title, subtitle, subtext }: authProps) => {
 
   const handleSubmit = async (values: registerFormValType) => {
     console.log("hit", values);
-    setSubmitting(true);
+    setSubmitting(true);// This is set to true, so that we cannot re-click the button, during the submission of registration data, and button remains in-active
+    // Here we call the service layer, to make the registration backend api call
     const data = await register(values);
-    setSubmitting(false);
+    setSubmitting(false);// After the submitting is done, and data send to db, and we get a response, then setSubmitting is set to false, and button is activated
     if (data) {
       router.push(appPaths.AUTH_ROUTES.SIGNIN);
     }

@@ -33,10 +33,10 @@ export const register = async (payload: registerFormValType) => {
   try {
     const response = await axiosPublic.post("/user-registration", payload);
     if (response?.status === 201) {
-      const { message, data, success } = response.data;
+      const { message, success } = response.data;
       if (success) {
         toast.success(message || "User registered successfully!");
-        return data;
+        return message;
       } else {
         toast.error("Failed to register! Please try again.");
         return null;
