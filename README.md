@@ -33,10 +33,26 @@ Welcome to the OscuroBok Frontend Codebase! This README provides a comprehensive
 
 ```mermaid
 graph TD
-    A[OTP Form Displayed] --> B[User Enters OTP]
-    B --> C{OTP Valid?}
-    C -->|Yes| D[Proceed to Reset Password]
-    C -->|No| E[Error: Invalid OTP]
+    %% Step 1: User submits email to begin the reset process
+    A[User] --> B[Forget Password]
+    B[Forget_Password] --> C[Auth_ForgetPassword]
+    C[Auth_ForgetPassword] --> |Submits_Email| AuthPage
+    AuthPage --> |Sends Email| Backend
+    Backend --> |OTP Sent| AuthPage
+    
+    %% Step 2: OTP Form is displayed to the user
+    AuthPage --> |OTP Form Displayed| OTPForm
+    User --> |Submits OTP| OTPForm
+    OTPForm --> |Verifies OTP| Backend
+    Backend --> |OTP Valid| AuthPage
+    
+    %% Step 3: Conditional handling of OTP validation
+    OTPForm --> E{OTP Valid?}
+    E -->|Yes| F[Proceed to Reset Password]
+    E -->|No| G[Error: Invalid OTP]
+
+    %% Final redirection step after OTP validation
+    AuthPage --> |Redirect to Reset Password| User
 ```
 
 ## State Management
@@ -44,17 +60,6 @@ graph TD
 
 ### Project Flow
 
-```mermaid
-graph TD
-    User --> |Submits Email| AuthPage
-    AuthPage --> |Sends Email| Backend
-    Backend --> |OTP Sent| AuthPage
-    User --> |Submits OTP| AuthPage
-    AuthPage --> |Verifies OTP| Backend
-    Backend --> |OTP Valid| AuthPage
-    AuthPage --> |Redirect to Reset Password| User
-
-```
 
 ## Documentations
 
@@ -164,18 +169,22 @@ At present, we officially aim to support the last two versions of the following 
 
 ## Licensing
 
-- Copyright 2024 [Creative Tim](https://www.creative-tim.com?ref=readme-mtdr)
+- Copyright 2024 [OscuroBok](https://github.com/OscuroBok/OscuroBok_dashboard_FE/blob/master/LICENSE)
 
 ## Useful Links
 
-- [More products](https://www.creative-tim.com/templates?ref=readme-mtdr) from Creative Tim
+- [More products](https://www.creative-tim.com/templates?ref=readme-mtdr) 
 
 ##### Social Media
 
-Twitter: <https://twitter.com/CreativeTim>
+Twitter: <>
 
 Facebook: <https://www.facebook.com/CreativeTim>
 
-Google+: <https://plus.google.com/+CreativetimPage>
+Google+: <>
 
-Instagram: <https://instagram.com/creativetimofficial>
+Instagram: <https://www.instagram.com/lesorcoscuro8>
+
+Gmail: <lesorc4202@gmail.com>
+
+LinkedIn: <https://www.linkedin.com/company/lesorc>
