@@ -32,29 +32,43 @@ Welcome to the OscuroBok Frontend Codebase! This README provides a comprehensive
 ### Workflow Diagram
 
 ```mermaid
+
 graph TD
-    %% Step 1: User submits email to begin the reset process
-    A[User] --> B[Forget Password]
-    B[Forget_Password] --> C[Auth_ForgetPassword]
-    C[Auth_ForgetPassword] --> |Submits_Email| AuthPage
-    AuthPage --> |Sends Email| Backend
-    Backend --> |OTP Sent| AuthPage
+    %% 1: User submits email to begin the reset process
+    A[User] --> B[Forget_Password_Btn]
+    %% 2: Button triggers Forget Password auth
+    B[Forget_Password_Btn] --> C[Auth_ForgetPassword]
+    %% 3: Email submitted to AuthService
+    C[Auth_ForgetPassword] --> |Submits_Email| AuthService
+    %% 4: AuthService calls Backend to send email
+    AuthService --> |Sends Email| Backend
+    %% 5: Move to next step (Proceed to Reset)
+    AuthService --> |OTP Verified| H[Proceed to Reset Password]
+    %% 6: Backend sends OTP via Gmail
+    Backend --> |OTP Sent| Gmail
+    %% 7: OTP received and set in OTP form
+    Gmail --> |Set OTP in| OTPForm
     
-    %% Step 2: OTP Form is displayed to the user
-    AuthPage --> |OTP Form Displayed| OTPForm
-    User --> |Submits OTP| OTPForm
-    OTPForm --> |Verifies OTP| Backend
-    Backend --> |OTP Valid| AuthPage
+    %% 8: OTP Form is displayed to the user
+    C[Auth_ForgetPassword] --> |OTP Form Displayed| OTPForm
+    %% 9: User submits OTP for validation
+    OTPForm --> |Submits OTP| Backend
+    %% 10: Backend checks OTP validity
+    Backend --> E{OTP Valid?}
     
-    %% Step 3: Conditional handling of OTP validation
-    OTPForm --> E{OTP Valid?}
-    E -->|Yes| F[Proceed to Reset Password]
+    %% 11: If valid, proceed to success
+    E -->|Yes| F[Success: Valid OTP]
+    %% 12: If invalid, show error
     E -->|No| G[Error: Invalid OTP]
 
-    %% Final redirection step after OTP validation
-    AuthPage --> |Redirect to Reset Password| User
+    %% 13: Success, proceed to reset
+    F[Success: Valid OTP] --> H[Proceed to Reset Password]
+    %% 14: Failure, return to OTP form for retry
+    G[Error: Invalid OTP] --> OTPForm
+
 ```
 
+    
 ## State Management
 - The Redux store manages global authentication and user data. Key actions include login, verifyOtp, and fetchUserData
 
