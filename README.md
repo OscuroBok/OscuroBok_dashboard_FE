@@ -39,11 +39,7 @@ graph TD
     C -->|No| E[Error: Invalid OTP]
 ```
 
-AuthForgotPassword Component
-- Located in app/pages/auth/forgotPassword.tsx
-- Handles email input and OTP verification using the useFormik hook for state management.
-
- State Management
+## State Management
 - The Redux store manages global authentication and user data. Key actions include login, verifyOtp, and fetchUserData
 
 ### Project Flow
@@ -59,69 +55,30 @@ graph TD
     AuthPage --> |Redirect to Reset Password| User
 
 ```
-    
 
-# OscuroBok_dashboard
-* git init
-* git clone https://github.com/OscuroBok/OscuroBok_dashboard.git(Clone from master)
-* git clone -b dashboard-sign-in https://github.com/OscuroBok/OscuroBok_dashboard_FE.git((Clone from other branch)
-* git add --all
-* git commit -m "Some mesage"
-* git push or git push --set-upstream origin master
-* npm i
-* npm run dev
+## Documentations
 
-# To push pull
-* git branch -m main master
-* git fetch origin
-* git branch -u origin/master master
-* git remote set-head origin -a
-* git push
-
-
-**Documentation built by Developers**
-
-Each element is well presented in very complex documentation.
-
-You can read more about the [documentation here](https://www.material-tailwind.com/docs/react/installation).
-
+- [MUI]:- https://mui.com/material-ui/getting-started/
+- [NextJS App router]:- https://nextjs.org/docs/app
 - Check [FAQ Page](https://www.creative-tim.com/faq)
 
 
-## Table of Contents
-
-- [Versions](#versions)
-- [Demo](#demo)
-- [Quick Start](#quick-start)
-- [Deploy](#deploy)
-- [Documentation](#documentation)
-- [File Structure](#file-structure)
-- [Browser Support](#browser-support)
-- [Resources](#resources)
-- [Reporting Issues](#reporting-issues)
-- [Technical Support or Questions](#technical-support-or-questions)
-- [Licensing](#licensing)
-- [Useful Links](#useful-links)
-
 ## Versions
+OscuroBok 1.0
 
-[<img src="https://raw.githubusercontent.com/creativetimofficial/public-assets/master/logos/react-logo.jpg?raw=true" width="60" height="60" />](https://www.creative-tim.com/product/material-tailwind-dashboard-react?ref=readme-mtdr)
-
-| React |
-| ----- |
-
-| [![Material Tailwind Dashboard React](https://s3.amazonaws.com/creativetim_bucket/products/488/thumb/material-tailwind-dashboard-react.jpg)](http://demos.creative-tim.com/material-tailwind-dashboard-react/#/?ref=readme-mtdr)
-
-## Demo
+## Pages
 
 - [Dashboard page](https://demos.creative-tim.com/material-tailwind-dashboard-react/#/dashboard/home?ref=readme-mtdr)
 - [Profile page](https://demos.creative-tim.com/material-tailwind-dashboard-react/#/dashboard/profile?ref=readme-mtdr)
-- [Tables page](https://demos.creative-tim.com/material-tailwind-dashboard-react/#/dashboard/tables?ref=readme-mtdr)
-- [Notifications page](https://demos.creative-tim.com/material-tailwind-dashboard-react/#/dashboard/notifications?ref=readme-mtdr)
 - [Sign in page](https://demos.creative-tim.com/material-tailwind-dashboard-react/#/auth/sign-in?ref=readme-mtdr)
 - [Sign up page](https://demos.creative-tim.com/material-tailwind-dashboard-react/#/auth/sign-up?ref=readme-mtdr)
+- [Forget Password page](https://demos.creative-tim.com/material-tailwind-dashboard-react/#/auth/sign-up?ref=readme-mtdr)
 
+## Components
 
+ AuthForgotPassword
+- Located in app/auth/forgot-password/page.tsx
+- Handles email input and OTP verification using the useFormik hook for state management.
 
 ## Deploy
 
@@ -133,42 +90,70 @@ You can read more about the [documentation here](https://www.material-tailwind.c
 
 1. Download and Install NodeJs LTS version from [NodeJs Official Page](https://nodejs.org/en/download/).
 2. Navigate to the root ./ directory of the product and run `npm install` or `yarn install` or `pnpm install` to install our local dependencies.
+   
+    ### OscuroBok_Dashboard_FE
+        * git init
+        * git clone https://github.com/OscuroBok/OscuroBok_dashboard.git(Clone from master)
+        * git clone -b dashboard-sign-in https://github.com/OscuroBok/OscuroBok_dashboard_FE.git((Clone from specific branch)
+        * git add --all
+        * git commit -m "Some mesage"
+        * git push or git push --set-upstream origin master
+        * Navigate to the root ./ directory of the project and run `npm i` or `yarn install` (Install dependencies in package.json)
+        * npm run dev(Start application)
 
-## Documentation
-
-The documentation for the Material Tailwind Dashboard React is hosted at our [website](https://material-tailwind.com/?ref=readme-mtdr).
-
-### What's included
-
-Within the download you'll find the following directories and files:
+### Folder Structure
 
 ```
-material-tailwind-dashboard-react
-    ├── public
-    │   ├── css
-    │   └── img
-    ├── src
-    │   ├── configs
-    │   ├── context
-    │   ├── data
-    │   ├── layouts
-    │   ├── pages
-    │   ├── widgets
-    │   ├── App.jsx
-    │   ├── main.jsx
-    │   └── routes.jsx
-    ├── .gitignore
-    ├── CHANGELOG.md
-    ├── index.html
-    ├── ISSUE_TEMPLATE.md
-    ├── jsconfig.json
-    ├── LICENSE
-    ├── package.json
-    ├── postcsss.config.cjs
-    ├── prettier.config.cjs
-    ├── README.md
-    ├── tailwind.config.cjs
-    └── vite.config.js
+📦 src/
+├── 📂 app/
+│   ├── 📂 components/
+│   │   ├── 📂 auth/                   # Auth-related components like login, registration, password reset
+│   │   │   ├── AuthLogin.tsx
+│   │   │   ├── AuthRegister.tsx
+│   │   │   └── AuthResetPassword.tsx
+│   │   ├── 📂 container/
+│   │   │   ├── 📂 custom-scroll/      # Custom scroll bar component
+│   │   │   ├── 📂 dashboards/         # Dashboard UI components
+│   │   │   ├── 📂 forms/              # Form elements and components
+│   │   │   └── 📂 shared/             # Reusable shared components
+│   ├── 📄 app.tsx                     # Main application component
+│   ├── 📄 global.css                  # Global styling
+│   ├── 📄 layout.tsx                  # Layout structure of the application
+│   ├── 📄 loading.tsx                 # Loading state component
+│   └── 📄 not-found.tsx               # 404 Page component
+├── 📂 hooks/                          # Custom hooks used across the app, Inbuilt React hooks like useState, etc.
+│   ├── useAuth.ts
+│   ├── useLogout.ts
+│   ├── usePermission.ts
+│   ├── useProfile.ts
+│   ├── useRouteInitializer.ts
+│   └── useUnAuth.ts
+├── 📂 services/                       # API service handlers for business logic
+│   ├── 📂 configs/
+│   │   └── axiosConfigs.ts            # Axios configuration for API requests
+│   ├── authService.ts                 # Service for authentication
+│   ├── dashboardService.ts            # Service for handling dashboard data
+│   ├── moduleService.ts               # Service for different modules
+│   ├── profileService.ts              # Service for user profile management
+│   ├── roleService.ts                 # Service for managing roles and permissions
+│   └── userService.ts                 # Service for user-related API calls
+├── 📂 store/                          # Redux store for state management
+│   ├── 📂 auth/
+│   ├── hooks.ts                       # Hooks for interacting with Redux store
+│   ├── providers.tsx                  # Providers for Redux and other global state
+│   └── store.ts                       # Main Redux store configuration
+├── 📂 types/                          # TypeScript types for type checking
+├── 📂 utils/                          # Utility functions and helpers
+│   ├── 📂 helper/
+│   ├── 📂 languages/
+│   └── 📂 theme/
+│       ├── axios.js                   # Axios utility functions
+│       ├── i18n.ts                    # Internationalization setup
+├── 📄 .env                            # Environment variables
+├── 📄 .eslintrc.json                  # ESLint configuration for code linting
+├── 📄 .gitignore                      # Files and directories to be ignored by Git
+└── 📄 LICENSE                         # License information for the project
+
 ```
 
 ## Browser Support
@@ -177,34 +162,13 @@ At present, we officially aim to support the last two versions of the following 
 
 <img src="https://s3.amazonaws.com/creativetim_bucket/github/browser/chrome.png" width="64" height="64"> <img src="https://s3.amazonaws.com/creativetim_bucket/github/browser/firefox.png" width="64" height="64"> <img src="https://s3.amazonaws.com/creativetim_bucket/github/browser/edge.png" width="64" height="64"> <img src="https://s3.amazonaws.com/creativetim_bucket/github/browser/safari.png" width="64" height="64"> <img src="https://s3.amazonaws.com/creativetim_bucket/github/browser/opera.png" width="64" height="64">
 
-
-
-## Reporting Issues
-
-We use GitHub Issues as the official bug tracker for the Material Tailwind Dashboard React. Here are some advices for our users that want to report an issue:
-
-1. Make sure that you are using the latest version of the Material Tailwind Dashboard React. Check the CHANGELOG from your dashboard on our [website](https://www.creative-tim.com/product/material-tailwind-dashboard-react?ref=readme-mtdr).
-2. Providing us reproducible steps for the issue will shorten the time it takes for it to be fixed.
-3. Some issues may be browser specific, so specifying in what browser you encountered the issue might help.
-
-## Technical Support or Questions
-
-If you have questions or need help integrating the product please [contact us](https://www.creative-tim.com/contact-us?ref=readme-mtdr) instead of opening an issue.
-
 ## Licensing
 
-- Copyright 2023 [Creative Tim](https://www.creative-tim.com?ref=readme-mtdr)
-- Creative Tim [license](https://www.creative-tim.com/license?ref=readme-mtdr)
+- Copyright 2024 [Creative Tim](https://www.creative-tim.com?ref=readme-mtdr)
 
 ## Useful Links
 
 - [More products](https://www.creative-tim.com/templates?ref=readme-mtdr) from Creative Tim
-
-- [Tutorials](https://www.youtube.com/channel/UCVyTG4sCw-rOvB9oHkzZD1w)
-
-- [Freebies](https://www.creative-tim.com/bootstrap-themes/free?ref=readme-mtdr) from Creative Tim
-
-- [Affiliate Program](https://www.creative-tim.com/affiliates/new?ref=readme-mtdr) (earn money)
 
 ##### Social Media
 
