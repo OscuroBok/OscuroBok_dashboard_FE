@@ -1,4 +1,4 @@
-import { useLocation, Link } from "react-router-dom";
+import { useLocation, Link, useNavigate } from "react-router-dom";
 import {
   Navbar,
   Typography,
@@ -25,12 +25,22 @@ import {
   setOpenConfigurator,
   setOpenSidenav,
 } from "@/context";
+import { useCookies } from "react-cookie";
+import { appPaths } from "@/utils/constants";
 
 export function DashboardNavbar() {
+  const navigate = useNavigate()
   const [controller, dispatch] = useMaterialTailwindController();
   const { fixedNavbar, openSidenav } = controller;
   const { pathname } = useLocation();
   const [layout, page] = pathname.split("/").filter((el) => el !== "");
+  const [cookies, setCookie, removeCookie] = useCookies(['authToken']);
+
+  const authenticated = cookies.authToken
+  const handleLogout = () => {
+    removeCookie('authToken')
+    navigate(appPaths.AUTH_ROUTES.SIGNIN)
+  }
 
   return (
     <Navbar
@@ -88,9 +98,10 @@ export function DashboardNavbar() {
               variant="text"
               color="blue-gray"
               className="hidden items-center gap-1 px-4 xl:flex normal-case"
+              onClick={handleLogout}
             >
               <UserCircleIcon className="h-5 w-5 text-blue-gray-500" />
-              Sign In
+              {authenticated ? 'Sign Out' : 'Sign In'}
             </Button>
             <IconButton
               variant="text"

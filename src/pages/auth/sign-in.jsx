@@ -1,4 +1,6 @@
-import { userSignIn } from "@/services/auth";
+import { signIn } from "@/services/auth/authService";
+import { setAuthState } from "@/store/auth/authSlice";
+import { appPaths } from "@/utils/constants";
 import {
   Card,
   Input,
@@ -7,98 +9,106 @@ import {
   Typography,
   Alert,
 } from "@material-tailwind/react";
-import { useMutation } from "@tanstack/react-query";
-import { useState } from "react";
+import { useFormik } from "formik";//Form data handling
+import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
+import * as Yup from 'yup';// Form Validations
+import { useCookies } from 'react-cookie';
 
+const validationSchema = Yup.object({
+  email: Yup.string().email("Must be an email").required("Email address is mandatory"),
+  password: Yup.string().required("Password is mandatory"),
+});
+
+const initialValues = {
+  email: "",
+  password: "",
+}
 
 export function SignIn() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [showAlert, setShowAlert] = useState(false);
-  const navigate=useNavigate()
-  const { mutateAsync, isError, error } = useMutation({
-    mutationKey: ['login'],
-    mutationFn: ()=>userSignIn({email,password})
-  })
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
+  const [cookies, setCookie] = useCookies(['authToken']);
 
-  async function sumbitHandler(e) {
-    e.preventDefault();
-    if (email.trim() != "" && password.trim() != "") {
-      const data=await mutateAsync();
-      if (isError) {
-        setShowAlert(true);
-        console.error(`Error occured in Signin route ${error} `);
-      }else{
-        console.log(data);
-        sessionStorage.setItem("token",data.token);
-        setEmail("");
-        setPassword("");
-        navigate("/")
-      }
-    } else {
-      setShowAlert(true);
+  // setSubmitting is a built-in and integrated with Formik's state management like disabling Sign In button while signing in.
+  const handleSubmit = async (values, {setSubmitting}) => {
+    setSubmitting(true);// Disable the submit button,
+    const data = await signIn(values);
+    setSubmitting(false);// Re-enable the submit button from ints loading state. After the verification of login credentials is completed, and user is validated to prevent multiple submissions
+    if(data) {
+      setCookie('authToken', data.token, { path: '/', maxAge: 3600 });// "/" default
+      dispatch(setAuthState())
+      navigate(appPaths.DASHBOARD.HOME)
     }
-  }
+  };
+
+  const {
+    handleSubmit: formikSubmit,
+    handleChange,
+    handleBlur,
+    values,
+    touched,
+    errors,
+    isSubmitting,
+  } = useFormik({
+    initialValues,
+    validationSchema,
+    onSubmit: handleSubmit,
+  });
+  
   return (
     <section className="m-8 flex gap-4">
       <div className="w-full lg:w-3/5 mt-24">
         <div className="text-center">
           <Typography variant="h2" className="font-bold mb-4">Sign In</Typography>
-          <Typography variant="paragraph" color="blue-gray" className="text-lg font-normal">Enter your email and password to Sign In.</Typography>
+          <Typography variant="paragraph" color="blue-gray" className="text-lg font-normal">
+            Welcome! Get ready to elevate your service
+          </Typography>
+
         </div>
-        {showAlert && <Alert>Please fill values</Alert>}
-        {isError && <Alert>Something Went Wrong</Alert>}
-        <form className="mt-8 mb-2 mx-auto w-80 max-w-screen-lg lg:w-1/2" onSubmit={sumbitHandler}>
+        <form className="mt-8 mb-2 mx-auto w-80 max-w-screen-lg lg:w-1/2" onSubmit={formikSubmit}>
           <div className="mb-1 flex flex-col gap-6">
             <Typography variant="small" color="blue-gray" className="-mb-3 font-medium">
               Your email
             </Typography>
             <Input
+              id="email" 
+              name="email"
               size="lg"
-              placeholder="name@mail.com"
+              placeholder="name@gmail.com"
               className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
               labelProps={{
                 className: "before:content-none after:content-none",
               }}
-              onChange={(e) => setEmail(e.target.value)}
+              value={values.email} 
+              onChange={handleChange} 
+              onBlur={handleBlur} 
             />
+            {touched.email && errors.email && (
+              <span className="text-red-400 text-xs">{errors.email}</span>
+            )}
             <Typography variant="small" color="blue-gray" className="-mb-3 font-medium">
               Password
             </Typography>
             <Input
               type="password"
               size="lg"
-              placeholder="********"
               className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
               labelProps={{
                 className: "before:content-none after:content-none",
               }}
-              onChange={(e) => setPassword(e.target.value)}
+              id="password" 
+              name="password" 
+              placeholder="Password" 
+              value={values.password} 
+              onChange={handleChange} 
+              onBlur={handleBlur} 
             />
+            {touched.password && errors.password && (
+              <span className="text-red-400 text-xs">{errors.password}</span>
+            )}
           </div>
-          <Checkbox
-            label={
-              <Typography
-                variant="small"
-                color="gray"
-                className="flex items-center justify-start font-medium"
-              >
-                I agree the&nbsp;
-                <a
-                  href="#"
-                  className="font-normal text-black transition-colors hover:text-gray-900 underline"
-                >
-                  Terms and Conditions
-                </a>
-              </Typography>
-            }
-            containerProps={{ className: "-ml-2.5" }}
-          />
-          <Button className="mt-6" fullWidth type="submit">
-            Sign In
-          </Button>
-          <div className="flex items-center justify-between gap-2 mt-6">
+          <div className="flex items-center justify-between mt-6">
             <Checkbox
               label={
                 <Typography
@@ -106,17 +116,39 @@ export function SignIn() {
                   color="gray"
                   className="flex items-center justify-start font-medium"
                 >
-                  Subscribe me to newsletter
+                  I agree to the&nbsp;
+                  <a
+                    href="#"
+                    className="font-normal text-black transition-colors hover:text-gray-900 underline"
+                  >
+                    Terms and Conditions
+                  </a>
                 </Typography>
               }
               containerProps={{ className: "-ml-2.5" }}
             />
-            <Typography variant="small" className="font-medium text-gray-900">
-              <a href="#">
-                Forgot Password
+            <Typography variant="small" className="font-medium text-gray-900 ml-4">
+              <a
+                href="#"
+                className="text-blue-600 hover:text-blue-800 transition-colors duration-200 ease-in-out underline"
+              >
+                Forgot Password?
               </a>
             </Typography>
           </div>
+
+          {/* Sign In Button */}
+          <Button
+            className={`mt-6 ${isSubmitting ? 'opacity-70 cursor-not-allowed' : ''}`}
+            fullWidth
+            type="submit"
+            disabled={isSubmitting}
+          >
+            {isSubmitting ? 'Signing In...' : 'Sign In'}
+          </Button>
+
+          
+
           <div className="space-y-4 mt-8">
             <Button size="lg" color="white" className="flex items-center gap-2 justify-center shadow-md" fullWidth>
               <svg width="17" height="16" viewBox="0 0 17 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -135,18 +167,29 @@ export function SignIn() {
               <span>Sign in With Google</span>
             </Button>
             <Button size="lg" color="white" className="flex items-center gap-2 justify-center shadow-md" fullWidth>
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-apple" viewBox="0 0 16 16">
+                <path d="M8.067 1.83c.277-.328.49-.756.424-1.206-.424.012-.937.274-1.24.602-.26.292-.486.733-.424 1.176.456.037.94-.234 1.24-.572zm1.99 2.634c-.672-.04-1.24.382-1.58.382-.355 0-.91-.362-1.498-.352-.77.012-1.477.444-1.87 1.13-.802 1.388-.207 3.452.575 4.579.38.563.831 1.194 1.424 1.173.567-.024.786-.36 1.481-.36.692 0 .89.36 1.498.349.619-.01 1.007-.564 1.386-1.13.435-.647.615-1.276.624-1.31-.013-.012-1.202-.456-1.214-1.805-.012-1.125.937-1.661.975-1.686-.532-.774-1.355-.857-1.647-.874zm1.34-2.628c-.355.428-.925.756-1.492.72-.07-.549.206-1.11.518-1.473.355-.428.978-.745 1.516-.756.06.561-.155 1.103-.542 1.509z" />
+              </svg>
+              <span>Sign in With Apple</span>
+            </Button>
+            <Button size="lg" color="white" className="flex items-center gap-2 justify-center shadow-md" fullWidth>
               <img src="/img/twitter-logo.svg" height={24} width={24} alt="" />
               <span>Sign in With Twitter</span>
             </Button>
           </div>
           <Typography variant="paragraph" className="text-center text-blue-gray-500 font-medium mt-4">
             Not registered?
-            <Link to="/auth/sign-up" className="text-gray-900 ml-1">Create account</Link>
+            <Link to={appPaths.AUTH_ROUTES.SIGNUP} className="text-gray-900 ml-1">Create account</Link>
           </Typography>
+          -- OR --
+          <Alert variant="small" color="blue-gray" className="flex items-center justify-start mt-4">
+          <Typography variant="paragraph" className="mr-2">{"Don't have an account?"}</Typography>
+          <Link to={appPaths.AUTH_ROUTES.SIGNUP} className="font-semibold underline underline-offset-2">Create Account</Link>
+        </Alert>
         </form>
-
+        
       </div>
-      <div className="w-2/5 h-full hidden lg:block">
+      <div className="hidden lg:block w-2/5 mt-24">
         <img
           src="/img/pattern.png"
           className="h-full w-full object-cover rounded-3xl"

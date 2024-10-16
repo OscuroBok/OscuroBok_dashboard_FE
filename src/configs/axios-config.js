@@ -1,110 +1,8 @@
-// import { url } from "@/utils/constants";
-// import ax from "axios";
-
-
-// const getAxios = ({ baseApiUrl, logoutUrl }) => {
-//     const { dispatch } = store;
-//     const axios = ax.create({
-//       baseURL: baseApiUrl,
-//       headers: {
-//         common: {
-//           'Content-Type': 'application/json',
-//         },
-//       },
-//       timeout: 10000,
-//     });
-
-//     axios.interceptors.request.use(
-//       (config) => {
-//         if (loaderRef.current) {
-//           loaderRef.current.continuousStart();
-//         }
-//         const userToken = getCookie('cbud-token');
-//         if (userToken) {
-//           config['headers']['Authorization'] = `Bearer ${userToken}`;
-//         }
-//         return config;
-//       },
-//       (error) => {
-//         return Promise.reject(error.response);
-//       }
-//     );
-
-//     axios.interceptors.response.use(
-//       (response) => {
-//         if (loaderRef.current) {
-//           loaderRef.current.complete();
-//         }
-//         return response;
-//       },
-//       async (error) => {
-//         if (loaderRef.current) {
-//           loaderRef.current.complete();
-//         }
-//         const originalRequest = error.config;
-
-//         if (
-//           error.response.status === 400 &&
-//           (window.location.pathname === RoutesConstant.TUTOR_LOGIN ||
-//             window.location.pathname === RoutesConstant.PARENT_LOGIN)
-//         ) {
-//           originalRequest._retry = false;
-//           return ax(originalRequest);
-//         } else if (
-//           error.response.status === 401 &&
-//           !originalRequest._retry &&
-//           (window.location.pathname !== RoutesConstant.TUTOR_LOGIN ||
-//             window.location.pathname !== RoutesConstant.PARENT_LOGIN)
-//         ) {
-//           originalRequest._retry = true;
-
-//           try {
-//             const refreshToken = getCookie('cbud-refreshToken');
-//             const response = await ax.post(`${baseUrl}/api/auth/login/refresh/`, {
-//               refresh: refreshToken,
-//             });
-//             const token = response.data?.access;
-
-//             setCookie('cbud-token', token);
-
-//             originalRequest.headers.Authorization = `Bearer ${token}`;
-//             return ax(originalRequest);
-//           } catch (error) {
-//             dispatch(logout());
-//             dispatch(removeCount('notification'));
-//             dispatch(removeCount('chat'));
-//             dispatch(removePrePaymentDetails());
-//             removeCookie('cbud-token');
-//             removeCookie('cbud-refreshToken');
-//             return (window.location.href = logoutUrl);
-//           }
-//         } else if (error.response.status === 500) {
-//           originalRequest._retry = false;
-//         }
-
-//         return Promise.reject(error.response || error);
-//       }
-//     );
-
-//     return axios;
-//   };
-
-//   export const axios = getAxios({
-//     baseApiUrl: baseUrl,
-//     logoutUrl: '/',
-//   });
-
-
-// export const instance = axios.create({
-//     baseURL: url,
-//     timeout: 5000,
-//     // headers: {'X-Custom-Header': 'foobar'},
-//     headers: {
-//         // 'Content-Type': 'multipart/form-data',
-//         "Access-Control-Allow-Origin": "*"
-//       }
-//   });
-
+/**
+  The code sets up Axios instances to make HTTP requests, with a base URL from environment variables.
+  It includes an interceptor to handle session expiration errors, logging the user out and redirecting them to the sign-in page if their session has expired.
+  It throws a custom error when this happens to show an appropriate message.
+*/
 import { url } from "@/utils/constants";
 import axios from "axios";
 import { appPaths } from "@/utils/constants";
@@ -114,6 +12,7 @@ import { redirectToPath } from "@/utils/redirect";
 
 const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
+// This is the class that will be called, whenever some custom error message needs to be set/created for some reason
 class CustomError extends Error {
   constructor(message) {
     super(message);
@@ -125,13 +24,18 @@ class CustomError extends Error {
     }
   }
 }
-
+// Axios Instance created successfully for public requests that don't need Authentication/login credential
+// Also withCredentials: true ensures cookies are included in cross-site requests
+// `withCredentials` indicates whether or not cross-site Access-Control requests, like making requests from one server to another server
+// should be made using credentials(jwt tokens) or not
+// withCredentials: false
 export const axiosPublic = axios.create({
   baseURL: BASE_URL,
   headers: { 'Content-Type': 'application/json' },
   withCredentials: true,
 })
 
+/* General Axios Instance for more API requests */
 const axiosInstance = axios.create({
   baseURL: BASE_URL,
   headers: { 'Content-Type': 'application/json' },
@@ -142,10 +46,11 @@ axiosInstance.interceptors.response.use((response) => {
 },
   async (error) => {
     const originalRequest = error.config;
-    if (error.response && error.response.status === 403 && !originalRequest.sent) {
+    // If server throws 403 error, due to session expiration,
+    if (error.response && error.response.status === 403 && !originalRequest.sent) { //if originalRequest.sent == true, !false = true
       originalRequest.sent = true;
 
-      store.dispatch(resetAuthState());
+      store.dispatch(resetAuthState());// Log the user out by calling the reset AuthState redux function that will make the global auth false
       redirectToPath(appPaths.AUTH_ROUTES.SIGNIN);
 
       const customError = new CustomError('Session expired! Please login again');
