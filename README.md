@@ -69,6 +69,7 @@ graph TD
 
 ```
 
+![OTP Flowchart](./public/images/svgs/OscuroBok-OTP.drawio.svg)
     
 ## State Management
 - The Redux store manages global authentication and user data. Key actions include login, verifyOtp, and fetchUserData
