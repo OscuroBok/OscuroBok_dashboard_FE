@@ -29,53 +29,10 @@ Welcome to the OscuroBok Frontend Codebase! This README provides a comprehensive
 ### Form Validation & Feedback
 - Uses Formik to handle form state, and validation provides real-time feedback. Alerts are shown using `react-toastify`.
 
-### Forget Password Workflow
 
-```mermaid
-
-graph TD
-    %% 1: User submits email to begin the reset process
-    A[User] --> Login
- Login --> B[Forget_Password_Btn]
-    %% 2: Button triggers Forget Password auth
-    B[Forget_Password_Btn] --> C[Auth_ForgetPassword]
-    %% 3: Email submitted to AuthService
-    C[Auth_ForgetPassword] --> |Submits_Email| AuthService
-    %% 4: AuthService calls Backend to send email
-    AuthService --> |Sends Email| Backend
-    %% 5: Move to next step (Proceed to Reset)
-    %% 6: Backend sends OTP via Gmail
-    Backend --> |OTP Sent| Gmail
-    %% 7: OTP received and set in OTP form
-    Gmail --> |Set OTP in| OTPForm
-    
-    %% 8: OTP Form is displayed to the user
-    C[Auth_ForgetPassword] --> |OTP Form Displayed| OTPForm
-    %% 9: User submits OTP for validation
-    OTPForm --> |Submits OTP| Backend
-    %% 10: Backend checks OTP validity
-    Backend --> |verifies OTP & Sends Status| AuthService
-    
-    %% 11: If valid, proceed to success
-    AuthService --> E{OTP Valid Status?}
-    E -->|Yes| F[Success: Valid OTP]
-    %% 12: If invalid, show error
-    E -->|No| G[Error: Invalid OTP]
-
-    %% 13: Success, proceed to reset
-    F[Success: Valid OTP] --> H[Proceed to Reset Password]
-    %% 14: Failure, return to OTP form for retry
-    G[Error: Invalid OTP] --> OTPForm
-
-```
-
-![OTP Flowchart](./public/images/svgs/OscuroBok-OTP.drawio.svg)
     
 ## State Management
 - The Redux store manages global authentication and user data. Key actions include login, verifyOtp, and fetchUserData
-
-### Project Flow
-
 
 ## Documentations
 
@@ -115,73 +72,13 @@ OscuroBok 1.0
     ### OscuroBok_Dashboard_FE
         * git init
         * git clone https://github.com/OscuroBok/OscuroBok_dashboard.git(Clone from master)
-        * git clone -b dashboard-sign-in https://github.com/OscuroBok/OscuroBok_dashboard_FE.git((Clone from specific branch)
+        * git clone -b dashboard-sign-in https://github.com/OscuroBok/OscuroBok_dashboard_FE.git(Clone from specific branch)
         * git add --all
         * git commit -m "Some mesage"
         * git push or git push --set-upstream origin master
         * Navigate to the root ./ directory of the project and run `npm i` or `yarn install` (Install dependencies in package.json)
         * npm run dev(Start application)
 
-### Folder Structure
-
-```
-📦 src/
-├── 📂 app/
-│   ├── 📂 components/
-│   │   ├── 📂 auth/                   # Auth-related components like login, registration, password reset
-│   │   │   ├── AuthLogin.tsx
-│   │   │   ├── AuthRegister.tsx
-│   │   │   └── AuthResetPassword.tsx
-│   │   ├── 📂 container/
-│   │   │   ├── 📂 custom-scroll/      # Custom scroll bar component
-│   │   │   ├── 📂 dashboards/         # Dashboard UI components
-│   │   │   ├── 📂 forms/              # Form elements and components
-│   │   │   └── 📂 shared/             # Reusable shared components
-│   ├── 📄 app.tsx                     # Main application component
-│   ├── 📄 global.css                  # Global styling
-│   ├── 📄 layout.tsx                  # Layout structure of the application
-│   ├── 📄 loading.tsx                 # Loading state component
-│   └── 📄 not-found.tsx               # 404 Page component
-├── 📂 hooks/                          # Custom hooks used across the app, Inbuilt React hooks like useState, etc.
-│   ├── useAuth.ts
-│   ├── useLogout.ts
-│   ├── usePermission.ts
-│   ├── useProfile.ts
-│   ├── useRouteInitializer.ts
-│   └── useUnAuth.ts
-├── 📂 services/                       # API service handlers for business logic
-│   ├── 📂 configs/
-│   │   └── axiosConfigs.ts            # Axios configuration for API requests
-│   ├── authService.ts                 # Service for authentication
-│   ├── dashboardService.ts            # Service for handling dashboard data
-│   ├── moduleService.ts               # Service for different modules
-│   ├── profileService.ts              # Service for user profile management
-│   ├── roleService.ts                 # Service for managing roles and permissions
-│   └── userService.ts                 # Service for user-related API calls
-├── 📂 store/                          # Redux store for state management
-│   ├── 📂 auth/
-│   ├── hooks.ts                       # Hooks for interacting with Redux store
-│   ├── providers.tsx                  # Providers for Redux and other global state
-│   └── store.ts                       # Main Redux store configuration
-├── 📂 types/                          # TypeScript types for type checking
-├── 📂 utils/                          # Utility functions and helpers
-│   ├── 📂 helper/
-│   ├── 📂 languages/
-│   └── 📂 theme/
-│       ├── axios.js                   # Axios utility functions
-│       ├── i18n.ts                    # Internationalization setup
-├── 📄 .env                            # Environment variables
-├── 📄 .eslintrc.json                  # ESLint configuration for code linting
-├── 📄 .gitignore                      # Files and directories to be ignored by Git
-└── 📄 LICENSE                         # License information for the project
-
-```
-
-## Browser Support
-
-At present, we officially aim to support the last two versions of the following browsers:
-
-<img src="https://s3.amazonaws.com/creativetim_bucket/github/browser/chrome.png" width="64" height="64"> <img src="https://s3.amazonaws.com/creativetim_bucket/github/browser/firefox.png" width="64" height="64"> <img src="https://s3.amazonaws.com/creativetim_bucket/github/browser/edge.png" width="64" height="64"> <img src="https://s3.amazonaws.com/creativetim_bucket/github/browser/safari.png" width="64" height="64"> <img src="https://s3.amazonaws.com/creativetim_bucket/github/browser/opera.png" width="64" height="64">
 
 ## Licensing
 
@@ -191,7 +88,7 @@ At present, we officially aim to support the last two versions of the following 
 
 - [More products](https://www.creative-tim.com/templates?ref=readme-mtdr) 
 
-##### Social Media
+## Social Media
 
 Twitter: <>
 
@@ -205,21 +102,6 @@ Gmail: <lesorc4202@gmail.com>
 
 LinkedIn: <https://www.linkedin.com/company/lesorc>
 
-
-
-
-
-git init
-
-git remote add origin https://github.com/OscuroBok/Oscuro_Next_Dashboard.git -> Add your GitHub repository as a remote
-
-git commit -m "Your commit message"
-
-git add . -> You need to stage the files that you want to commit.
-
-git push -u origin master -> Push the changes to your GitHub repository
-
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
 

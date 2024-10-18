@@ -1,8 +1,8 @@
 "use client";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
-import { useFormik } from "formik";
-import * as Yup from "yup";
+import { useFormik, FormikHelpers } from "formik"; // Form data handling
+import * as Yup from "yup"; // Form Validations
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import Link from "next/link";
@@ -43,27 +43,30 @@ const initialFormValues: loginFormValType = {
 };
 
 const AuthLogin = ({ title, subtitle, subtext }: authProps) => {
-  const [submitting, setSubmitting] = useState(false);
+  // const [submitting, setSubmitting] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const dispatch = useDispatch();
   const router = useRouter();
 
-  const handleSubmit = async (values: loginFormValType) => {
+  // setSubmitting is a built-in and integrated with Formik's state management like disabling Sign In button while signing in.
+  const handleSubmit = async (values: loginFormValType,
+    { setSubmitting }: FormikHelpers<loginFormValType>
+  ) => {
     // console.log("hit")
-    setSubmitting(true);
+    setSubmitting(true); // Disable the submit button,
     const data = await login(values);
-    setSubmitting(false);
-    if (data) {
+    setSubmitting(false);// Re-enable the submit button from ints loading state. After the verification of login credentials is completed, and user is validated to prevent multiple submissions
+    if(data) {
       dispatch(setAuthState());
       router.push(appPaths.AUTH_ROUTES.DASHBOARD);
     }
   };
 
-  const formik = useFormik({
-    initialValues: initialFormValues,
-    validationSchema: validationSchema,
-    onSubmit: handleSubmit,
-  });
+    const formik = useFormik({
+      initialValues: initialFormValues,
+      validationSchema,
+      onSubmit: handleSubmit,
+    });
 
   return (
     <>
@@ -165,7 +168,7 @@ const AuthLogin = ({ title, subtitle, subtext }: authProps) => {
           </Stack>
         </Stack>
         <Box>
-          {submitting ? (
+          {formik.isSubmitting ? (
             <LoadingButton
               loading
               variant="contained"

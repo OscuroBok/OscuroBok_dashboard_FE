@@ -33,10 +33,10 @@ export const register = async (payload: registerFormValType) => {
   try {
     const response = await axiosPublic.post("/user-registration", payload);
     if (response?.status === 201) {
-      const { message, data, success } = response.data;
+      const { message, success } = response.data;
       if (success) {
         toast.success(message || "User registered successfully!");
-        return data;
+        return message;
       } else {
         toast.error("Failed to register! Please try again.");
         return null;
@@ -54,16 +54,16 @@ export const register = async (payload: registerFormValType) => {
 
 export const login = async (payload: loginFormValType): Promise<any> => {
   try {
-    const response = await axiosPublic.post("/login", payload);
+    const response = await axiosPublic.post("auth/login", payload);
     if (response?.status === 200) {
-      const { message, data, token } = response.data;
+      const { message, role, token } = response.data;
       const authToken = token;
       console.log(token);
-      if (data && token) {
+      if (role && token) {
         if (!hasCookie(authToken)) {
           setCookie("authToken", authToken, { path: "/", maxAge: 3600 });
           toast.success(message || "User logged in successfully!");
-          return data;
+          return role;
         }
       } else {
         deleteCookie("authToken");
