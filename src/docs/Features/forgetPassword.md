@@ -3,7 +3,7 @@
 ### Forget Password Workflow
 
 
-![OTP Flowchart](./public/images/svgs/OscuroBok-OTP.drawio.svg)
+![OTP Flowchart](../Images/svgs/OscuroBok-OTP.drawio.svg)
 
 
 ```mermaid
