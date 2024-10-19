@@ -29,10 +29,10 @@ const validationSchema = Yup.object({
     .email("Must be an email")
     .required("Email address is mandatory"),
   contact_no: Yup.string()
-    .min(10, "Not a valid Contact Number")
+    .matches(/^\d{10}$/, "Contact Number must be exactly 10 digits and contain only numbers")
     .required("Contact Number is mandatory"),
   password: Yup.string().required("Password is mandatory"),
-  role_id: Yup.string().required("Please select a role"), // Added validation for the dropdown
+  role_id: Yup.number().required("Please select a role"), // Added validation for the dropdown
 });
 
 export const roleData = [
@@ -55,7 +55,7 @@ const initialFormValues: registerFormValType = {
   name: "",
   contact_no: "",
   password: "",
-  role_id: "",
+  role_id: 0,
 };
 const AuthRegister = ({ title, subtitle, subtext }: authProps) => {
   const [submitting, setSubmitting] = useState(false);
@@ -64,9 +64,10 @@ const AuthRegister = ({ title, subtitle, subtext }: authProps) => {
 
   const handleSubmit = async (values: registerFormValType) => {
     console.log("hit", values);
-    setSubmitting(true);
+    setSubmitting(true);// This is set to true, so that we cannot re-click the button, during the submission of registration data, and button remains in-active
+    // Here we call the service layer, to make the registration backend api call
     const data = await register(values);
-    setSubmitting(false);
+    setSubmitting(false);// After the submitting is done, and data send to db, and we get a response, then setSubmitting is set to false, and button is activated
     if (data) {
       router.push(appPaths.AUTH_ROUTES.SIGNIN);
     }
@@ -215,12 +216,14 @@ const AuthRegister = ({ title, subtitle, subtext }: authProps) => {
                 value={formik.values.contact_no}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
-                error={
-                  formik.touched.contact_no && Boolean(formik.errors.contact_no)
-                }
-                helperText={
-                  formik.touched.contact_no && formik.errors.contact_no
-                }
+                onKeyPress={(event: React.KeyboardEvent<HTMLInputElement>) => {
+                  // Only allow numbers
+                  if (!/[0-9]/.test(event.key)) {
+                    event.preventDefault();
+                  }
+                }}
+                error={formik.touched.contact_no && Boolean(formik.errors.contact_no)}
+                helperText={formik.touched.contact_no && formik.errors.contact_no}
               />
             </Box>
           </Stack>

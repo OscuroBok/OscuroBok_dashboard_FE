@@ -30,6 +30,7 @@ export default function AuthForgotPassword() {
   // Handle OTP submission
   const handleOtpSubmit = async () => {
     setSubmitting(true);
+    // Here API call is made, to service Layer, to send mail for OTP
     const data = await verifyOtp({ email: formik.values.email, otp: otpValue });
     if (data) {
       toast.success("OTP verified! Password reset process initiated.");
@@ -43,6 +44,7 @@ export default function AuthForgotPassword() {
 
   // Handle email submission to switch to OTP form
   const handleSubmit = async (values: forgotPasswordValType) => {
+    console.log(values)
     setSubmitting(true);
     // Here you'd usually send the email to the server to trigger OTP
     toast.success("Simulating email submission, showing OTP form.");
@@ -134,7 +136,7 @@ export default function AuthForgotPassword() {
                 <br />
                 <span
                   onClick={handleBackToEmailForm}
-                  style={{
+                  style = {{
                     marginLeft: "8px",
                     color: "blue",
                     cursor: "pointer",
