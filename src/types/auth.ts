@@ -1,3 +1,5 @@
+import React from "react";
+
 export interface loginFormValType {
   email: string;
   password: string;
@@ -41,6 +43,6 @@ export interface registerRoleType {
 
 export interface authProps {
   title: string;
-  subtitle: string;
-  subtext: string;
+  subtitle: React.ReactNode;
+  subtext: React.ReactNode;
 }

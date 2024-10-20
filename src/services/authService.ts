@@ -33,16 +33,17 @@ export const register = async (payload: registerFormValType) => {
 
 export const login = async (payload: loginFormValType): Promise<any> => {
   try {
-    const response = await axiosPublic.post("/login", payload);
+    const response = await axiosPublic.post("/auth/login", payload);
     if (response?.status === 200) {
-      const { message, data, token } = response.data;
+      const { message, role, token } = response.data;
       const authToken = token;
       console.log(token);
-      if (data && token) {
+      console.log(role);
+      if (role && token) {
         if (!hasCookie(authToken)) {
           setCookie("authToken", authToken, { path: "/", maxAge: 3600 });
           toast.success(message || "User logged in successfully!");
-          return data;
+          return role;
         }
       } else {
         deleteCookie("authToken");
