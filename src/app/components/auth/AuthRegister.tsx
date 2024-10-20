@@ -41,11 +41,7 @@ export const roleData = [
     value: "4",
   },
   {
-    label: "Super Admin",
-    value: "1",
-  },
-  {
-    label: "Admin",
+    label: "Restaurant",
     value: "2",
   },
 ];
