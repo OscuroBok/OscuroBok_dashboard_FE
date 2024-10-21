@@ -1,16 +1,17 @@
-import {
-    Box,
-    Button,
-    Grid,
-    TextField
-} from "@mui/material";
+import { Box, Button, Grid, TextField, Typography } from "@mui/material";
 import { useFormik } from "formik";
 import * as yup from "yup";
 
 const SocialSitesForm = () => {
   const validationSchema = yup.object({
-    facebookUrl: yup.string().url("Enter a valid Facebook URL").required("Facebook URL is required"),
-    instagramUrl: yup.string().url("Enter a valid Instagram URL").required("Instagram URL is required"),
+    facebookUrl: yup
+      .string()
+      .url("Enter a valid Facebook URL")
+      .required("Facebook URL is required"),
+    instagramUrl: yup
+      .string()
+      .url("Enter a valid Instagram URL")
+      .required("Instagram URL is required"),
   });
   const {
     values,
@@ -34,7 +35,9 @@ const SocialSitesForm = () => {
     <Box sx={{ p: 3 }}>
       <form onSubmit={handleSubmit}>
         <Box display={"flex"} flexDirection={"column"} gap={5} width={"50%"}>
-          {/* Facebook Url */}
+          <Typography variant="h2" sx={{ py: 3 }}>
+            Social Sites
+          </Typography>
           <Grid item xs={12} md={6}>
             <TextField
               fullWidth
