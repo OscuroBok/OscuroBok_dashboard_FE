@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { appPaths } from "@/utils/helper/appPaths";
 import { hasCookie } from "cookies-next";
 
+// This code is called to check at every page, if the user is logged in after fetching AuthState from Redux Store and has set Cookies containing token, if no, then redirect to Dashboard
 const useUnAuth = (): boolean => {
   const router = useRouter();
   const [checking, setChecking] = useState(true);

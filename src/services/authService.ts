@@ -7,15 +7,36 @@ import {
 import api, { axiosPublic } from "./configs/axiosConfigs";
 import { toast } from "react-toastify";
 import { hasCookie, setCookie, deleteCookie } from "cookies-next";
+import { verifyOtpType } from "@/types/auth";
+
+
+export const verifyOtp = async (payload: verifyOtpType): Promise<any> => {
+  try {
+    const response = await axiosPublic.post("/auth/verify-otp", payload);
+    if (response?.data?.statusCode === 200 && response?.data?.success === true) {
+      const otpVerificationResponse = response?.data?.data?.result;
+      toast.success(response?.data?.message ?? "OTP verified successfully!");
+      return otpVerificationResponse;
+    } else {
+      toast.error(response?.data?.message ?? "OTP verification failed!");
+      return null;
+    }
+  } catch (error: any) {
+    toast.error(error?.response?.data?.errors?.[0] ?? "Something went wrong!");
+    console.log("error", error);
+    return null;
+  }
+};
+
 
 export const register = async (payload: registerFormValType) => {
   try {
     const response = await axiosPublic.post("/user-registration", payload);
     if (response?.status === 201) {
-      const { message, data, success } = response.data;
+      const { message, success } = response.data;
       if (success) {
         toast.success(message || "User registered successfully!");
-        return data;
+        return message;
       } else {
         toast.error("Failed to register! Please try again.");
         return null;
@@ -33,12 +54,11 @@ export const register = async (payload: registerFormValType) => {
 
 export const login = async (payload: loginFormValType): Promise<any> => {
   try {
-    const response = await axiosPublic.post("/auth/login", payload);
+    const response = await axiosPublic.post("auth/login", payload);
     if (response?.status === 200) {
       const { message, role, token } = response.data;
       const authToken = token;
       console.log(token);
-      console.log(role);
       if (role && token) {
         if (!hasCookie(authToken)) {
           setCookie("authToken", authToken, { path: "/", maxAge: 3600 });

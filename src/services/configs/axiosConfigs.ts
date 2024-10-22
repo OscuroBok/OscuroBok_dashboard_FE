@@ -43,7 +43,7 @@ axiosInstance.interceptors.response.use(
       if (hasCookie('authToken')) {
         return axiosInstance(originalRequest);
       } else {
-        store.dispatch(resetAuthState());
+        store.dispatch(resetAuthState()); // Log the user out by calling the reset AuthState redux function that will make the global auth false
         redirectToPath(appPaths.AUTH_ROUTES.SIGNIN);
         const customError = new CustomError(
           "Session expired!, please login again"
