@@ -6,10 +6,10 @@ import { changePasswordType } from "@/types/profile";
 
 export const getProfileDetails = async (): Promise<any> => {
   try {
-    const response = await api.get('/users/my-info');
-    if(response?.data?.statusCode === 200 && response?.data?.success === true) {
-      const loginResponse = response?.data?.data?.result
-      return loginResponse;
+    const response = await api.get('/my-profile');
+    if(response?.data?.status === 200 && response?.data?.success === true) {
+      const profileResponse = response?.data?.data?.result
+      return profileResponse;
     } else {
       toast.error("Something went wrong!");
     }

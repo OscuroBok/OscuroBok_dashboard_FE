@@ -2,12 +2,12 @@
 import { Grid, Box, Typography } from "@mui/material";
 import PageContainer from "@/app/components/container/PageContainer";
 import Logo from "@/app/(DashboardLayout)/layout/shared/logo/Logo";
-import AuthTwoSteps from "../AuthForms/AuthTwoSteps";
 import Image from "next/image";
+import AuthTwoStepVerification from "@/app/components/AuthComponents/AuthTwoStepVerification";
 
 export default function TwoSteps() {
   return (
-    <PageContainer title="Two steps Page" description="this is Sample page">
+    <PageContainer title="Two Step Verification Page" description="this is Sample page">
       <Grid
         container
         spacing={0}
@@ -79,13 +79,12 @@ export default function TwoSteps() {
             </Typography>
 
             <Typography variant="subtitle1" color="textSecondary" mt={2} mb={1}>
-              We sent a verification code to your mobile. Enter the code from
-              the mobile in the field below.
+              We have sent a verification code to your email. Enter the code in the field below.
             </Typography>
-            <Typography variant="subtitle1" fontWeight="700" mb={1}>
+            {/* <Typography variant="subtitle1" fontWeight="700" mb={1}>
               ******1234
-            </Typography>
-            <AuthTwoSteps />
+            </Typography> */}
+            <AuthTwoStepVerification />
           </Box>
         </Grid>
       </Grid>

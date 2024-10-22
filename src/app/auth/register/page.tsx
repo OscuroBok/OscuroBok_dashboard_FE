@@ -4,7 +4,7 @@ import { Grid, Box, Typography, Stack } from "@mui/material";
 import PageContainer from "@/app/components/container/PageContainer";
 import Logo from "@/app/(DashboardLayout)/layout/shared/logo/Logo";
 
-import AuthRegister from "../../components/auth/AuthRegister";
+import AuthRegister from "../../components/AuthComponents/AuthRegister";
 import Image from "next/image";
 import { appPaths } from "@/utils/helper/appPaths";
 import useUnAuth from "@/hooks/useUnAuth";
@@ -12,12 +12,10 @@ import { useState } from "react";
 
 export default function Register() {
   const checking = useUnAuth();
-  console.log(checking)
+  console.log(checking);
   const [show, setShow] = useState(true);
-  if(checking) {
-    return (
-      <></>
-    );
+  if (checking) {
+    return <></>;
   }
   return (
     <PageContainer title="Register Page" description="this is Sample page">
@@ -88,7 +86,7 @@ export default function Register() {
         >
           <Box p={4}>
             <AuthRegister
-              title="Welcome to Modernize"
+              title="Welcome to Oscurobok"
               subtext={
                 <Typography variant="subtitle1" color="textSecondary" mb={1}>
                   Your Admin Dashboard

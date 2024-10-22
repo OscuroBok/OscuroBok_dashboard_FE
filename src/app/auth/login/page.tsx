@@ -7,16 +7,14 @@ import Image from "next/image";
 import { appPaths } from "@/utils/helper/appPaths";
 import useUnAuth from "@/hooks/useUnAuth";
 import { useState } from "react";
-import AuthLogin from "@/app/components/auth/AuthLogin";
+import AuthLogin from "@/app/components/AuthComponents/AuthLogin";
 
 export default function Login() {
   const checking = useUnAuth();
-  console.log(checking)
+  console.log(checking);
   const [show, setShow] = useState(true);
-  if(checking) {
-    return (
-      <></>
-    );
+  if (checking) {
+    return <></>;
   }
   return (
     <PageContainer title="Login Page" description="this is Sample page">
@@ -87,7 +85,7 @@ export default function Login() {
         >
           <Box p={4}>
             <AuthLogin
-              title="Welcome to Modernize"
+              title="Welcome to Oscurobok"
               subtext={
                 <Typography variant="subtitle1" color="textSecondary" mb={1}>
                   Your Admin Dashboard
@@ -100,7 +98,7 @@ export default function Login() {
                     variant="h6"
                     fontWeight="500"
                   >
-                    New to Modernize?
+                    New to Oscurobok?
                   </Typography>
                   <Typography
                     component={Link}

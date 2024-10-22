@@ -3,6 +3,7 @@ export const appPaths = {
       SIGNIN: "/auth/login",
       SIGNUP:"/auth/register",
       FORGET_PASSWORD: "/auth/forgot-password",
+      TWO_STEP_VERIFICATION: "/auth/two-step-verification",
       RESET_PASSWORD: "/auth/reset-password/:token",
       CREATE_PASSWORD: "/auth/create-password/:token",
       DASHBOARD: "/",

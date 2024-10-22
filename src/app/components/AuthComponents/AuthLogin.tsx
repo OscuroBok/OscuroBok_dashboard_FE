@@ -49,24 +49,26 @@ const AuthLogin = ({ title, subtitle, subtext }: authProps) => {
   const router = useRouter();
 
   // setSubmitting is a built-in and integrated with Formik's state management like disabling Sign In button while signing in.
-  const handleSubmit = async (values: loginFormValType,
+  const handleSubmit = async (
+    values: loginFormValType,
     { setSubmitting }: FormikHelpers<loginFormValType>
   ) => {
     // console.log("hit")
     setSubmitting(true); // Disable the submit button,
     const data = await login(values);
-    setSubmitting(false);// Re-enable the submit button from ints loading state. After the verification of login credentials is completed, and user is validated to prevent multiple submissions
-    if(data) {
+    setSubmitting(false); // Re-enable the submit button from ints loading state. After the verification of login credentials is completed, and user is validated to prevent multiple submissions
+    if (data) {
+      console.log("data", data);
       dispatch(setAuthState());
       router.push(appPaths.AUTH_ROUTES.DASHBOARD);
     }
   };
 
-    const formik = useFormik({
-      initialValues: initialFormValues,
-      validationSchema,
-      onSubmit: handleSubmit,
-    });
+  const formik = useFormik({
+    initialValues: initialFormValues,
+    validationSchema,
+    onSubmit: handleSubmit,
+  });
 
   return (
     <>

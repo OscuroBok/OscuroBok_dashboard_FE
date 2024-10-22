@@ -89,7 +89,7 @@ const Profile = () => {
               gap={1}
             >
               <IconMail width={15} height={15} />
-              info@modernize.com
+              info@oscurobok.com
             </Typography>
           </Box>
         </Stack>

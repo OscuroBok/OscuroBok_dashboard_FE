@@ -7,26 +7,6 @@ import {
 import api, { axiosPublic } from "./configs/axiosConfigs";
 import { toast } from "react-toastify";
 import { hasCookie, setCookie, deleteCookie } from "cookies-next";
-import { verifyOtpType } from "@/types/auth";
-
-
-export const verifyOtp = async (payload: verifyOtpType): Promise<any> => {
-  try {
-    const response = await axiosPublic.post("/auth/verify-otp", payload);
-    if (response?.data?.statusCode === 200 && response?.data?.success === true) {
-      const otpVerificationResponse = response?.data?.data?.result;
-      toast.success(response?.data?.message ?? "OTP verified successfully!");
-      return otpVerificationResponse;
-    } else {
-      toast.error(response?.data?.message ?? "OTP verification failed!");
-      return null;
-    }
-  } catch (error: any) {
-    toast.error(error?.response?.data?.errors?.[0] ?? "Something went wrong!");
-    console.log("error", error);
-    return null;
-  }
-};
 
 
 export const register = async (payload: registerFormValType) => {
